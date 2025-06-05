@@ -590,3 +590,9 @@ Identify and stop the process that's listening on port 8000 or configure this ap
 2025-06-05T11:53:33.679+08:00  INFO 11340 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-06-05T11:53:33.679+08:00  INFO 11340 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-06-05T11:53:33.680+08:00  INFO 11340 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-06-05T16:38:47.557+08:00  INFO 11340 --- [springboot-jpa-book] [RMI TCP Connection(294)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-05T16:38:47.558+08:00  INFO 11340 --- [springboot-jpa-book] [RMI TCP Connection(294)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-05T16:38:47.561+08:00  INFO 11340 --- [springboot-jpa-book] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-05T16:38:47.564+08:00  INFO 11340 --- [springboot-jpa-book] [RMI TCP Connection(294)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-05T16:38:47.566+08:00  INFO 11340 --- [springboot-jpa-book] [RMI TCP Connection(294)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-05T16:38:47.567+08:00  INFO 11340 --- [springboot-jpa-book] [RMI TCP Connection(294)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
