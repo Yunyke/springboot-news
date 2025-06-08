@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.dto.NewsDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.NewsDto;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
