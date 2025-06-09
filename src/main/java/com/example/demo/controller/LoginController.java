@@ -27,6 +27,7 @@ public class LoginController {
 		return "login";
 	}
 	
+	
 	@PostMapping
 	public String checkLogin(@RequestParam String username, @RequestParam String password, HttpSession session, HttpServletRequest req, Model model) {
 		
@@ -42,7 +43,7 @@ public class LoginController {
 		// 將憑證放入 session 變數中以利其他程式進行取用與驗證
 		session.setAttribute("userCert", userCert); // 放憑證
 		session.setAttribute("locale", req.getLocale()); // 取得客戶端所在地 例如: zh_TW
-		return "redirect:/index"; 
+		return "redirect:/news";
 	}
 	
 }

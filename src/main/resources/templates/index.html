@@ -1,170 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head translate="no">
-  <meta charset="UTF-8">
-  <title th:text="${title}">Daily News</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title th:text="${title}">Daily News</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap"
+	rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
-    }
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f8f9fa;
+	font-family: Arial, sans-serif;
+}
 
-    .header-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 6rem;
-      text-align: center;
-      margin-top: 20px;
-      color: #000;
-      letter-spacing: 0.05em;
-      font-style: normal;
-    }
+.header-title {
+	font-family: 'Playfair Display', serif;
+	font-weight: 700;
+	font-size: 6rem;
+	text-align: center;
+	margin-top: 20px;
+	color: #000;
+	letter-spacing: 0.05em;
+	font-style: normal;
+}
 
-    .nav-link:hover {
-      color: #ffcc00 !important;
-      background-color: #333333;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+.nav-link:hover {
+	color: #ffcc00 !important;
+	background-color: #333333;
+	border-radius: 5px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    .grid-container {
-      padding: 20px;
-      background-color: #f8f9fa;
-      display: block;
-    }
-   .news-section {
-  margin-bottom: 30px; /* 顯示區塊間的間距 */
-  background-color: #f0f0f0; /* 設置背景色 */
-  padding: 20px ; /* 向右偏移，這裡的40px會讓區塊更靠右 */
-  border-radius: 8px; /* 圓角效果 */
+.grid-container {
+	padding: 20px;
+	background-color: #f8f9fa;
+	display: block;
+}
+
+.news-section {
+	margin-bottom: 30px; /* 顯示區塊間的間距 */
+	background-color: #f0f0f0; /* 設置背景色 */
+	padding: 20px; /* 向右偏移，這裡的40px會讓區塊更靠右 */
+	border-radius: 8px; /* 圓角效果 */
 }
 
 h2.news-section-title {
-  margin-bottom: 20px; /* 減少標題與卡片之間的空間 */
-  text-align: left; /* 確保標題左對齊 */
-  margin-left: 15px; /* 增加左边距，向右偏移 */
+	margin-bottom: 20px; /* 減少標題與卡片之間的空間 */
+	text-align: left; /* 確保標題左對齊 */
+	margin-left: 15px; /* 增加左边距，向右偏移 */
 }
 
-    /* 新聞區塊的排列 */
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 20px;
-      align-items: start;
-    }
-
-    /* 卡片樣式調整 */
-    .news-card {
-      background-color: #f7f7f7;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: row;
-      padding: 10px;
-      position: relative; /* 讓 tooltip 可以定位 */
-      transition: background-color 0.3s ease;
-      margin: 10px;
-      height: auto;
-    }
-
-    .hover-description {
-  display: none;
-  position: absolute;
-  background-color: rgba(50, 50, 50, 0.9);
-  color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  max-width: 500px;
-  z-index: 999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  top: 100%; /* 出現在卡片下方 */
-  left: 0;
-  white-space: normal;
+/* 新聞區塊的排列 */
+.news-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	gap: 20px;
+	align-items: start;
 }
 
+/* 卡片樣式調整 */
+.news-card {
+	background-color: #f7f7f7;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+	position: relative; /* 讓 tooltip 可以定位 */
+	transition: background-color 0.3s ease;
+	margin: 10px;
+	height: auto;
+}
+
+.hover-description {
+	display: none;
+	position: absolute;
+	background-color: rgba(50, 50, 50, 0.9);
+	color: #fff;
+	padding: 10px;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	max-width: 500px;
+	z-index: 999;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	top: 100%; /* 出現在卡片下方 */
+	left: 0;
+	white-space: normal;
+}
 
 .news-card:hover .hover-description {
-  display: block;
-}
-   .news-img {
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  max-width: 45%;
-  max-height: 100px; 
-  flex-shrink: 0;
-  border-radius: 6px;
-  margin-right: 15px;
+	display: block;
 }
 
-    /* 文字內容區 */
-    .news-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex-grow: 1;
-      max-height: 120px;
-      overflow: hidden; /* 防止文字溢出 */
-    }
+.news-img {
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	max-width: 45%;
+	max-height: 100px;
+	flex-shrink: 0;
+	border-radius: 6px;
+	margin-right: 15px;
+}
 
-    /* 標題加大並換行 */
-    .news-title {
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin: 0 0 8px 0;
-      word-wrap: break-word;
-      line-height: 1.2;
-      overflow: visible;
-      text-overflow: normal; /* 超過範圍顯示省略號 */
-      white-space: normal; /* 允許標題換行 */
-    }
+/* 文字內容區 */
+.news-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-grow: 1;
+	max-height: 120px;
+	overflow: hidden; /* 防止文字溢出 */
+}
 
-    /* 摘要限制最多三行，多的顯示... */
-    .news-desc {
-      flex-grow: 1;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3; /* 限制最多顯示三行 */
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
-      margin: 0 0 8px 0;
-      color: #444;
-      font-size: 0.9rem;
-    }
+/* 標題加大並換行 */
+.news-title {
+	font-weight: 700;
+	font-size: 1.2rem;
+	margin: 0 0 8px 0;
+	word-wrap: break-word;
+	line-height: 1.2;
+	overflow: visible;
+	text-overflow: normal; /* 超過範圍顯示省略號 */
+	white-space: normal; /* 允許標題換行 */
+}
 
-	
-    /* 標籤與分類 */
-    .news-tags {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: auto;
-    }
+/* 摘要限制最多三行，多的顯示... */
+.news-desc {
+	flex-grow: 1;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* 限制最多顯示三行 */
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	margin: 0 0 8px 0;
+	color: #444;
+	font-size: 0.9rem;
+}
 
-    /* 隱藏 Google 翻譯 */
-    #google_translate_element {
-      display: none !important;
-    }
+/* 標籤與分類 */
+.news-tags {
+	font-size: 0.8rem;
+	color: #666;
+	margin-top: auto;
+}
 
-    .goog-te-banner-frame.skiptranslate {
-      display: none !important;
-    }
+/* 隱藏 Google 翻譯 */
+#google_translate_element {
+	display: none !important;
+}
 
-    body {
-      top: 0 !important;
-    }
-  </style>
+.goog-te-banner-frame.skiptranslate {
+	display: none !important;
+}
+
+body {
+	top: 0 !important;
+}
+</style>
 </head>
 <body>
-  <div id="google_translate_element" style="display:none;"></div>
-  <!-- Google Translate -->
-  <script type="text/javascript">
+	<div id="google_translate_element" style="display: none;"></div>
+	<!-- Google Translate -->
+	<script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -184,36 +188,48 @@ h2.news-section-title {
       }, 1000); // 等待元件載入1秒再切換
     }
   </script>
-  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  
-  
-  <!-- 🔵 頁面主標題 -->
-  <div class="header-title notranslate" translate="no">Daily News</div>
+	<script
+		src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-  <!-- 🔵 導覽列 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3 mb-4">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#" translate="no">Home</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" href="#">最新新聞</a></li>
-          
-          <li class="nav-item"><a class="nav-link" href="#">WSJ</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">BBC</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" th:href="@{/login}">登入</a>
-          <li class="nav-item"><a class="nav-link" href="#">註冊</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <!-- 🔵 新聞卡片區 -->
+	<!-- 🔵 頁面主標題 -->
+	<div class="header-title notranslate" translate="no">Daily News</div>
+
+	<!-- 🔵 導覽列 -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3 mb-4">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#" translate="no">Home</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active" href="#">最新新聞</a></li>
+
+					<li class="nav-item"><a class="nav-link" href="#">WSJ</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">BBC</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
+				</ul>
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item" th:if="${username}"><a
+						class="nav-link disabled text-warning" href="#"> 👋 歡迎，<strong
+							th:text="${username}">使用者</strong>
+					</a></li>
+					<li class="nav-item" th:if="${username}"><a class="nav-link"
+						th:href="@{/logout}">登出</a></li>
+
+					<!-- 如果沒登入，顯示登入註冊 -->
+					<li class="nav-item" th:if="${username == null}"><a
+						class="nav-link" th:href="@{/login}">登入</a></li>
+					<li class="nav-item" th:if="${username == null}"><a
+						class="nav-link" href="#">註冊</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	  <!-- 🔵 新聞卡片區 -->
   <div class="grid-container">
     <!-- 三個區塊：WSJ、BBC 和 NHK -->
     <div class="news-grid">
@@ -272,6 +288,36 @@ h2.news-section-title {
       </div>
     </div>
   </div>
+   <!-- CNN 成功：兩欄排版 -->
+  <div th:if="${cnnNews != null}" class="row g-4">
+    
+    <!-- 左側：卡片 -->
+    <div class="col-lg-5">
+      <div class="news-card h-100">
+        <a th:href="@{${cnnNews.link}}" target="_blank" style="text-decoration: none; color: inherit;">
+          <div class="d-flex align-items-center">
+            <img th:if="${cnnNews.img != null}" th:src="${cnnNews.img}" class="news-img" alt="CNN 主圖"
+                 onerror="this.style.display='none'" />
+            <div class="news-content">
+              <h5 class="news-title" th:text="${cnnNews.title}">CNN 標題</h5>
+              <div class="hover-description" th:text="${cnnNews.description}">CNN 摘要</div>
+              <p class="text-muted" th:text="${cnnNews.date}">日期</p>
+              <p class="news-tags" th:text="${cnnNews.byline}">記者</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 右側：內容段落 -->
+    <div class="col-lg-7">
+      <div class="p-2">
+        <p th:each="para : ${cnnNews.content}" th:text="${para}" style="margin-bottom: 1rem;"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 </body>
 </html>
