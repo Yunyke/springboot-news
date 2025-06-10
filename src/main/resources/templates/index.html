@@ -212,11 +212,11 @@ body {
 					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
 				</ul>
 				<ul class="navbar-nav ms-auto">
-					<li class="nav-item" th:if="${username}"><a
+					<li class="nav-item" th:if="${session.name}"><a
 						class="nav-link disabled text-warning" href="#"> 歡迎~<strong
-							th:text="${username}">使用者</strong>
+							th:text="${name}">使用者</strong>
 					</a></li>
-					<li class="nav-item" th:if="${username}"><a class="nav-link"
+					<li class="nav-item" th:if="${name}"><a class="nav-link"
 						th:href="@{/logout}">登出</a></li>
 
 					<!-- 如果沒登入，顯示登入註冊 -->

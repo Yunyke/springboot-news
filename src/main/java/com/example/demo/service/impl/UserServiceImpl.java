@@ -30,15 +30,9 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public void addUser(Integer id, String name, String username, String password, LocalDate birthdate, String gender, String email, Boolean active) {
-		User user = new User();
-		user.setName(name);
-	    user.setUsername(username);
-	    user.setPassword(password);
-	    user.setBirthdate(birthdate);
-	    user.setGender(gender);
-	    user.setEmail(email);
-	    user.setActive(active);
+	public void addUser(UserDto userDto) {
+		
+		User user = userMapper.toEntity(userDto);
 	   
 		userRepository.save(user);
 	}

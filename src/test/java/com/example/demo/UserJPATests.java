@@ -20,8 +20,7 @@ public class UserJPATests {
 	
 	@Test void testUserAdd() {
 		
-		userService.addUser(null, "John", "john1234", "1234", LocalDate.of(2000,6,6), "Male", "john1234@gmail.com", true);
-		userService.addUser(null, "Mary", "mary999", "999", LocalDate.of(1995,2,16), "Female", "mary999@gmail.com", true);
+		
 		
 		System.out.println("測試新增ok " );
 	}

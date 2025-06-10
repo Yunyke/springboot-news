@@ -32,21 +32,27 @@ public class RegisterController {
             Model model,
             HttpServletRequest request
     ) {
-        try {
-            registerService.registerUser(userDto);
+    	 try {
+             // ✅ 呼叫註冊服務
+             registerService.registerUser(userDto);
 
-            UserCert userCert = new UserCert();
-            userCert.setUsername(userDto.getUsername());
-            
-            // 若註冊成功，將使用者資訊存入 session
-            HttpSession session = request.getSession();
-            session.setAttribute("userCert", userCert);
-            session.setAttribute("locale", request.getLocale());
+             // ✅ 建立登入憑證並儲存使用者資訊
+             UserCert userCert = new UserCert();
+             userCert.setUsername(userDto.getUsername());
+             userCert.setName(userDto.getName()); // ✅ 新增：將 name 放入 UserCert 供顯示歡迎用
 
-            return "redirect:/news";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "register";
+             // ✅ 將使用者資訊存入 Session
+             HttpSession session = request.getSession();
+             session.setAttribute("userCert", userCert);
+             session.setAttribute("name", userDto.getName()); // ✅ 新增：單獨設置 name 屬性給畫面用
+             session.setAttribute("locale", request.getLocale());
+
+             // ✅ 導向首頁
+             return "redirect:/news";
+         } catch (Exception e) {
+             model.addAttribute("error", e.getMessage());
+             return "register";
+         }
         }
-    }
+    
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.dto.UserCert;
 import com.example.demo.service.CertService;
-import com.example.demo.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,32 +17,37 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-	
-	@Autowired
-	private CertService certService;
-	
-	@GetMapping
-	public String loginPage() {
-		return "login";
-	}
-	
-	
-	@PostMapping
-	public String checkLogin(@RequestParam String username, @RequestParam String password, HttpSession session, HttpServletRequest req, Model model) {
-		
-		UserCert userCert = null;
-		
-		try {
-			userCert = certService.getCert(username, password);
-		} catch (Exception e) {
-			model.addAttribute("message", e.getMessage());
-			return "error";
-		}
-		
-		// 將憑證放入 session 變數中以利其他程式進行取用與驗證
-		session.setAttribute("userCert", userCert); // 放憑證
-		session.setAttribute("locale", req.getLocale()); // 取得客戶端所在地 例如: zh_TW
-		return "redirect:/news";
-	}
-	
+
+    @Autowired
+    private CertService certService;
+
+    @GetMapping
+    public String loginPage() {
+        return "login";
+    }
+
+    @PostMapping
+    public String checkLogin(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpSession session,
+            HttpServletRequest req,
+            Model model) {
+
+        try {
+            // ✅ 從 certService 取得使用者憑證（包含 name 和 username）
+            UserCert userCert = certService.getCert(username, password);
+
+            // ✅ 將資訊放入 session
+            session.setAttribute("userCert", userCert);
+            session.setAttribute("name", userCert.getName()); // 頁面用 ${name}
+            session.setAttribute("locale", req.getLocale());
+
+            return "redirect:/news";
+
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "error";
+        }
+    }
 }
