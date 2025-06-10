@@ -20,7 +20,7 @@ public class CertServiceImpl implements CertService {
 
 	@Override
 	public com.example.demo.model.dto.UserCert getCert(String username, String password) throws CertExcetion {
-		User user = userRepository.getUser(username);
+		User user = userRepository.findByUsername(username);
 		if (user == null) {
 			throw new CertExcetion("查無此人");
 		}

@@ -21,6 +21,7 @@ public class CnnNews {
     private String date;
     private String description;
     private List<String> content;
+    private String link;
 
     @Override
     public String toString() {

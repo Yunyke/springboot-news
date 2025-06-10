@@ -213,7 +213,7 @@ body {
 				</ul>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item" th:if="${username}"><a
-						class="nav-link disabled text-warning" href="#"> 👋 歡迎，<strong
+						class="nav-link disabled text-warning" href="#"> 歡迎~<strong
 							th:text="${username}">使用者</strong>
 					</a></li>
 					<li class="nav-item" th:if="${username}"><a class="nav-link"
@@ -223,7 +223,7 @@ body {
 					<li class="nav-item" th:if="${username == null}"><a
 						class="nav-link" th:href="@{/login}">登入</a></li>
 					<li class="nav-item" th:if="${username == null}"><a
-						class="nav-link" href="#">註冊</a></li>
+						class="nav-link" th:href="@{/register}">註冊</a></li>
 				</ul>
 			</div>
 		</div>

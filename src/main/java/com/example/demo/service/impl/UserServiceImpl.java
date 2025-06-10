@@ -22,7 +22,7 @@ public class UserServiceImpl  implements UserService{
 	
 	@Override
 	public UserDto getUser(String username) {
-		User user = userRepository.getUser(username);
+		User user = userRepository.findByUsername(username);
 		if(user == null) {
 			return null;
 		}
