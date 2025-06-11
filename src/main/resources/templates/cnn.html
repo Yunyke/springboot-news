@@ -12,8 +12,31 @@
 </head>
 <body>
     <h1>CNN News</h1>
-    <div>
-      <pre th:utext="${newsData}"></pre>
-    </div>
+     
+    <ul th:if="${newsList != null}">
+        <li th:each="news : ${newsList}" style="margin-bottom: 40px;">
+            <h2 th:text="${news.title}">新聞標題</h2>
+
+            <p><strong>作者：</strong><span th:text="${news.author != null ? news.author : '未知'}">作者名稱</span></p>
+
+            <p><strong>發布時間：</strong><span th:text="${news.publishedAt}">時間</span></p>
+
+            <div th:if="${news.urlToImage != null}">
+                <img th:src="${news.urlToImage}" alt="新聞圖片" width="400">
+            </div>
+
+            <p><strong>摘要：</strong><span th:text="${news.description}">新聞摘要</span></p>
+
+            <p><strong>內容預覽：</strong><span th:text="${news.content}">部分內容</span></p>
+
+            <p>
+                <a th:href="${news.url}" target="_blank">🔗 閱讀完整新聞</a>
+            </p>
+
+            <hr>
+        </li>
+    </ul>
+
+    <p th:if="${newsList == null || newsList.isEmpty()}">目前沒有可顯示的新聞。</p>
 </body>
 </html>

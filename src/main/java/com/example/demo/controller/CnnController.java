@@ -20,11 +20,8 @@ public class CnnController {  // ✅ 類名修正a
 
     @GetMapping("/cnn")
     public String getCnnNews(Model model) {
-        String rawJson = cnnCrawlerService.getCnnNews();  // 從 service 抓原始 JSON
-        JSONObject raw = new JSONObject(rawJson);         // 解析 JSON
-        String pretty = raw.toString(2);                  // 格式化成漂亮 JSON
-
-        model.addAttribute("newsData", pretty);           // 傳給前端
+    	List<CnnNews> newsList = cnnCrawlerService.getCnnNews();
+    	model.addAttribute("newsList", newsList);
         return "cnn";
     }
 }

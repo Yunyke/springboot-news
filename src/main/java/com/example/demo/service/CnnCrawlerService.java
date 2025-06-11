@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class CnnCrawlerService {
 
-    public String getCnnNews() {
+	 public List<CnnNews> getCnnNews() {
         String basedURL = "https://newsapi.org/v2/everything?";
         String sources = "cnn";
         String language = "en";
@@ -27,6 +27,7 @@ public class CnnCrawlerService {
         String URL = basedURL + "sources=" + sources + "&language=" + language + "&apiKey=" + apiKey;
 
         StringBuilder response = new StringBuilder();
+        List<CnnNews> newsList = new ArrayList<>();
         try {
             java.net.URL url = new java.net.URL(URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -41,9 +42,27 @@ public class CnnCrawlerService {
             while ((currentLine = reader.readLine()) != null) {
                 response.append(currentLine);
             }
+            // 🔍 開始解析 JSON 字串
+            JSONObject jsonObject = new JSONObject(response.toString());
+            JSONArray articles = jsonObject.getJSONArray("articles");
+
+            for (int i = 0; i < articles.length(); i++) {
+                JSONObject item = articles.getJSONObject(i);
+
+                CnnNews news = new CnnNews();
+                news.setTitle(item.optString("title"));
+                news.setAuthor(item.optString("author"));
+                news.setUrlToImage(item.optString("urlToImage"));
+                news.setDescription(item.optString("description"));
+                news.setUrl(item.optString("url"));
+                news.setContent(item.optString("content"));
+                news.setPublishedAt(item.optString("publishedAt"));
+
+                newsList.add(news);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return response.toString();
+        return newsList;
     }
 }
