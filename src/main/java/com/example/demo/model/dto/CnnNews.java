@@ -14,25 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CnnNews {
-    private String title;
-    private String img;
-    private List<String> reporter;
-    private String byline;
-    private String date;
-    private String description;
-    private List<String> content;
-    private String link;
-
-    @Override
-    public String toString() {
-        return "Title: " + title + "\n" +
-               "Image: " + img + "\n" +
-               "Reporters: " + reporter + "\n" +
-               "Byline: " + byline + "\n" +
-               "Date: " + date + "\n" +
-               "Description: " + description + "\n" +
-               "Content:\n" + String.join("\n", content);
-    }
+	private String title;
+	private String description;
+	private String url;
+	private String urlToImage;
+	private String publishedAt;
 }
 //"title": "Israel intercepts Gaza-bound aid ship, detaining Greta Thunberg and other prominent activists",
 //"img": "https://media.cnn.com/api/v1/images/stellar/prod/still-21687969-16016-016-still.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp",

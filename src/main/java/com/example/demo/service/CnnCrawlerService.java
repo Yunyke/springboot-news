@@ -10,77 +10,40 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CnnCrawlerService {
 
-    public CnnNews crawl(String url) throws IOException {
-        Document doc = Jsoup.connect(url)
-                            .userAgent("Mozilla/5.0")
-                            .get();
+    public String getCnnNews() {
+        String basedURL = "https://newsapi.org/v2/everything?";
+        String sources = "cnn";
+        String language = "en";
+        String apiKey = "ce761eb8cf3c4502afd4330735237d5f";
+        String URL = basedURL + "sources=" + sources + "&language=" + language + "&apiKey=" + apiKey;
 
-        CnnNews news = new CnnNews();
-
-        // Step 1: 找出含 metadata 的 <script> 區塊
-        Elements scriptTags = doc.select("script");
-        for (Element script : scriptTags) {
-            String content = script.html();
-            if (content.contains("window.CNN.metadata")) {
-                int jsonStart = content.indexOf("window.CNN.metadata") + "window.CNN.metadata = ".length();
-                int jsonEnd = content.indexOf("};", jsonStart) + 1;
-
-                String jsonString = content.substring(jsonStart, jsonEnd);
-                JSONObject json = new JSONObject(jsonString);
-                JSONObject meta = json.getJSONObject("content");
-
-                // Step 2: 擷取欄位
-                news.setTitle(meta.optString("headline"));
-                news.setImg(meta.optString("srcset"));
-                news.setByline(meta.optString("byline"));
-
-                JSONArray authors = meta.optJSONArray("author");
-                List<String> reporters = new ArrayList<>();
-                if (authors != null) {
-                    for (int i = 0; i < authors.length(); i++) {
-                        reporters.add(authors.getString(i));
-                    }
-                }
-                news.setReporter(reporters);
-
-                // Step 3: 取發佈日期（fallback 至 byline 時戳）
-                String byline = news.getByline();
-                String extractedDate = byline.replaceAll(".*Updated\\s+([^,]+,\\s+[^,]+),.*", "$1");
-                news.setDate("2025-06-09"); // or parse if needed
-
-                break;
-            }
-        }
-
-        // Step 4: 抓第一段當 description
-        Element firstParagraph = doc.selectFirst("div.article__content-container p");
-        if (firstParagraph != null) {
-            news.setDescription(firstParagraph.text());
-        }
-     // Step 5: 抓所有段落作為 content
-        Elements paragraphs = doc.select("p.vossi-paragraph");
-        List<String> contentList = new ArrayList<>();
-        for (Element para : paragraphs) {
-            contentList.add(para.text());
-        }
-        news.setContent(contentList);
-        return news;
-    }
-    
-
-    public static void main(String[] args) {
-        CnnCrawlerService service = new CnnCrawlerService();
+        StringBuilder response = new StringBuilder();
         try {
-            CnnNews news = service.crawl("https://edition.cnn.com/2025/06/08/middleeast/freedom-flotilla-gaza-aid-ship-thunberg-intl-hnk");
-            System.out.println(news);
-        } catch (IOException e) {
-            System.err.println("Error crawling CNN: " + e.getMessage());
+            java.net.URL url = new java.net.URL(URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            
+         // 依 HTTP 回應碼顯示成功/失敗            
+            System.out.println("CNN news fetch " + (connection.getResponseCode() == HttpURLConnection.HTTP_OK ? "success" : "failed with code " + connection.getResponseCode()));
+            
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                response.append(currentLine);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return response.toString();
     }
 }

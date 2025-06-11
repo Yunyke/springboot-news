@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/cnn.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CNN Latest</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem 5vw; }
+        article { margin-bottom: 2rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <h1>CNN News</h1>
+    <div>
+      <pre th:utext="${newsData}"></pre>
+    </div>
+</body>
+</html>

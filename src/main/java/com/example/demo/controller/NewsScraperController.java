@@ -47,21 +47,21 @@ public class NewsScraperController {
 		model.addAttribute("nhkNewsList", nhkRssService.getNhkNews());
 		model.addAttribute("wsjNewsList", wsjRssService.getReutersNews());
 
-		// CNN 是爬蟲方式，需要特別 try-catch
-		try {
-			CnnNews cnnNews = cnnCrawlerService.crawl(CNN_URL);
-			model.addAttribute("cnnNews", cnnNews);
-		} catch (Exception e) {
-			log.warn("CNN 爬蟲失敗：{}", e.getMessage());
-			model.addAttribute("cnnNewsError", "無法載入 CNN 新聞：" + e.getMessage());
-		}
-
-		// 若 session 有登入資訊，顯示使用者名稱
-		UserCert userCert = (UserCert) session.getAttribute("userCert");
-		if (userCert != null) {
-			// model.addAttribute("username", userCert.getUsername());
-			model.addAttribute("name", userCert.getName());
-		}
+//		// CNN 是爬蟲方式，需要特別 try-catch
+//		try {
+//			CnnNews cnnNews = cnnCrawlerService.crawl(CNN_URL);
+//			model.addAttribute("cnnNews", cnnNews);
+//		} catch (Exception e) {
+//			log.warn("CNN 爬蟲失敗：{}", e.getMessage());
+//			model.addAttribute("cnnNewsError", "無法載入 CNN 新聞：" + e.getMessage());
+//		}
+//
+//		// 若 session 有登入資訊，顯示使用者名稱
+//		UserCert userCert = (UserCert) session.getAttribute("userCert");
+//		if (userCert != null) {
+//			// model.addAttribute("username", userCert.getUsername());
+//			model.addAttribute("name", userCert.getName());
+		//}
 
 		return "index"; // 回傳 Thymeleaf 或其他 template 名稱
 	}
