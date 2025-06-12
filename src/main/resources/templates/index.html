@@ -75,7 +75,7 @@ h2.news-section-title {
 	position: relative; /* 讓 tooltip 可以定位 */
 	transition: background-color 0.3s ease;
 	margin: 10px;
-	height: auto;
+	height: 135px;
 }
 
 .hover-description {
@@ -107,13 +107,16 @@ h2.news-section-title {
 	flex-shrink: 0;
 	border-radius: 6px;
 	margin-right: 15px;
+	margin-top: 5px;
 }
 
 /* 文字內容區 */
 .news-content {
+	padding-top: 5px; /* ✅ 輕微上邊距控制間距 */
+	padding-bottom: 20px; /* ✅ 保留底部空間給時間 */
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	flex-grow: 1;
 	max-height: 120px;
 	overflow: hidden; /* 防止文字溢出 */
@@ -129,6 +132,14 @@ h2.news-section-title {
 	overflow: visible;
 	text-overflow: normal; /* 超過範圍顯示省略號 */
 	white-space: normal; /* 允許標題換行 */
+}
+
+.news-time {
+	position: absolute;
+	bottom: 10px;
+	right: 15px;
+	font-size: 0.8rem;
+	color: #888;
 }
 
 /* 摘要限制最多三行，多的顯示... */
@@ -205,9 +216,9 @@ body {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active" href="#">最新新聞</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#">本日新聞</a></li>
 
-					<li class="nav-item"><a class="nav-link" href="#">WSJ</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">CNN</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">BBC</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
 				</ul>
@@ -229,95 +240,83 @@ body {
 		</div>
 	</nav>
 
-	  <!-- 🔵 新聞卡片區 -->
-  <div class="grid-container">
-    <!-- 三個區塊：WSJ、BBC 和 NHK -->
-    <div class="news-grid">
-      
-         
-  <div class="news-section">
-        <h2 class="news-section-title mb-3" translate="no">WSJ</h2>
-        <div th:each="news : ${wsjNewsList}" th:if="${news.title != null} and ${news.title} != ''" class="news-card">
-          <a th:href="${news.link}" target="_blank" style="text-decoration: none; color: inherit;">
-            <div style="display: flex; align-items: center;">
-              <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}" class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
-              <div class="news-content">
-                <h5 class="news-title" th:text="${news.title}">標題</h5>
-              <div class="hover-description" th:text="${news.description}">內容</div>
-                <p class="text-muted" th:text="${news.pubDate}">日期</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
+	<!-- 🔵 新聞卡片區 -->
+	<div class="grid-container">
+		<!-- 三個區塊：CNN、BBC 和 NHK -->
+		<div class="news-grid">
 
 
-      <!-- BBC News -->
-       <div class="news-section">
-        <h2 class="news-section-title mb-3" translate="no">BBC</h2>
-        <div th:each="news : ${newsList}" th:if="${news.title != null} and ${news.title} != ''" class="news-card">
-          <a th:href="${news.link}" target="_blank" style="text-decoration: none; color: inherit;">
-            <div style="display: flex; align-items: center;">
-              <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}" class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
-              <div class="news-content">
-                <h5 class="news-title" th:text="${news.title}">標題</h5>
-              <div class="hover-description" th:text="${news.description}">內容</div>
-                <p class="text-muted" th:text="${news.pubDate}">日期</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
+			<div class="news-section">
+				<h2 class="news-section-title mb-3" translate="no">CNN</h2>
 
-      <!-- NHK News -->
-       <div class="news-section">
-        <h2 class="news-section-title mb-3" translate="no">NHK</h2>
-        <div th:each="news : ${nhkNewsList}" th:if="${news.title != null} and ${news.title} != ''" class="news-card">
-          <a th:href="${news.link}" target="_blank" style="text-decoration: none; color: inherit;">
-            <div style="display: flex; align-items: center;">
-              <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}" class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
-              <div class="news-content">
-                <h5 class="news-title" th:text="${news.title}">標題</h5>
-              	             	
-				<div class="hover-description" th:text="${news.description}">內容</div>
-                <p class="text-muted" th:text="${news.pubDate}">日期</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-   <!-- CNN 成功：兩欄排版 -->
-  <div th:if="${cnnNews != null}" class="row g-4">
-    
-    <!-- 左側：卡片 -->
-    <div class="col-lg-5">
-      <div class="news-card h-100">
-        <a th:href="@{${cnnNews.link}}" target="_blank" style="text-decoration: none; color: inherit;">
-          <div class="d-flex align-items-center">
-            <img th:if="${cnnNews.img != null}" th:src="${cnnNews.img}" class="news-img" alt="CNN 主圖"
-                 onerror="this.style.display='none'" />
-            <div class="news-content">
-              <h5 class="news-title" th:text="${cnnNews.title}">CNN 標題</h5>
-              <div class="hover-description" th:text="${cnnNews.description}">CNN 摘要</div>
-              <p class="text-muted" th:text="${cnnNews.date}">日期</p>
-              <p class="news-tags" th:text="${cnnNews.byline}">記者</p>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
+				<div th:each="news : ${newsList}"
+					th:if="${news != null and news.title != null and news.title != ''}"
+					class="news-card">
+					<a th:href="${news.url}" target="_blank"
+						style="text-decoration: none; color: inherit;">
+						<div style="display: flex; align-items: center;">
+							<img th:if="${news.urlToImage != null}"
+								th:src="${news.urlToImage}" class="news-img" alt="新聞圖片"
+								onerror="this.style.display='none'" />
+							<div class="news-content">
+								<h5 class="news-title" th:text="${news.title}">標題</h5>
+								<div class="hover-description" th:text="${news.description}">摘要</div>
+								<p class="text-muted news-time" th:text="${news.publishedAt}">發布時間</p>
+							</div>
+						</div>
+					</a>
+				</div>
 
-    <!-- 右側：內容段落 -->
-    <div class="col-lg-7">
-      <div class="p-2">
-        <p th:each="para : ${cnnNews.content}" th:text="${para}" style="margin-bottom: 1rem;"></p>
-      </div>
-    </div>
 
-  </div>
-</div>
+			</div>
+
+
+			<!-- BBC News -->
+			<div class="news-section">
+				<h2 class="news-section-title mb-3" translate="no">BBC</h2>
+				<div th:each="news : ${bbcNewsList}"
+					th:if="${news.title != null} and ${news.title} != ''"
+					class="news-card">
+					<a th:href="${news.link}" target="_blank"
+						style="text-decoration: none; color: inherit;">
+						<div style="display: flex; align-items: center;">
+							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
+								class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
+							<div class="news-content">
+								<h5 class="news-title" th:text="${news.title}">標題</h5>
+								<div class="hover-description" th:text="${news.description}">內容</div>
+								<p class="text-muted news-time" th:text="${news.pubDate}">日期</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<!-- NHK News -->
+			<div class="news-section">
+				<h2 class="news-section-title mb-3" translate="no">NHK</h2>
+				<div th:each="news : ${nhkNewsList}"
+					th:if="${news.title != null} and ${news.title} != ''"
+					class="news-card">
+					<a th:href="${news.link}" target="_blank"
+						style="text-decoration: none; color: inherit;">
+						<div style="display: flex; align-items: center;">
+							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
+								class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
+							<div class="news-content">
+								<h5 class="news-title" th:text="${news.title}">標題</h5>
+
+								<div class="hover-description" th:text="${news.description}">內容</div>
+								<p class="text-muted news-time" th:text="${news.pubDate}">日期</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
 
 </body>
 </html>

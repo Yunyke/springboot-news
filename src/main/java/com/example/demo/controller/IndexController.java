@@ -3,7 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.service.BBCRssService;
 import com.example.demo.service.NHKRssService;
-import com.example.demo.service.WSJRssService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
