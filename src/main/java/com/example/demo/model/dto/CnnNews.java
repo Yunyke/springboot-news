@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CnnNews {
+	private Long id;
 	private String title;
 	private String author;
 	private String urlToImage;
@@ -24,6 +25,7 @@ public class CnnNews {
 	private String url;
 	private String content;
 	private String publishedAt;
+	private Boolean favorited;
 }
 //"publishedAt": "2025-06-10T15:28:34Z",
 //"author": "Curt Devine",

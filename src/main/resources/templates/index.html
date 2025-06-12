@@ -162,6 +162,47 @@ h2.news-section-title {
 	margin-top: auto;
 }
 
+.star-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.news-item {
+	position: relative;
+	padding: 1rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.star-form {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+}
+
+.star-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1.5rem;
+	padding: 0;
+}
+
+.star {
+    color: gray;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.star.filled {
+    color: hotpink; /* 可以換成 crimson、deeppink、red 看你喜歡哪種 */
+}
+
+.star:hover {
+    color: pink;
+    transform: scale(1.2);
+}
+
 /* 隱藏 Google 翻譯 */
 #google_translate_element {
 	display: none !important;
@@ -252,6 +293,12 @@ body {
 				<div th:each="news : ${newsList}"
 					th:if="${news != null and news.title != null and news.title != ''}"
 					class="news-card">
+					<!-- 🟢 收藏按鈕 -->
+					<button type="button" class="star-button" onclick="toggleFavorite([[${news.id}]], [[${session.userId}]])">
+  <span th:id="'star-' + ${news.id}"
+        th:text="${news.favorited} ? '💖' : '🤍'"
+        th:class="${news.favorited} ? 'star filled' : 'star'"></span>
+</button>
 					<a th:href="${news.url}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">
@@ -262,6 +309,7 @@ body {
 								<h5 class="news-title" th:text="${news.title}">標題</h5>
 								<div class="hover-description" th:text="${news.description}">摘要</div>
 								<p class="text-muted news-time" th:text="${news.publishedAt}">發布時間</p>
+
 							</div>
 						</div>
 					</a>
@@ -313,6 +361,34 @@ body {
 					</a>
 				</div>
 			</div>
+			<script>
+			function toggleFavorite(newsId, userId) {
+			    if (!userId || userId === 'null') {
+			        alert("請先登入才能收藏！");
+			        return;
+			    }
+
+			    fetch(`/users/${userId}/favorites/${newsId}`, {
+			        method: 'POST'
+			    }).then(response => {
+			        if (response.ok) {
+			            const star = document.getElementById(`star-${newsId}`);
+			            if (star.classList.contains('filled')) {
+			                star.classList.remove('filled');
+			                star.innerText = '🤍';
+			            } else {
+			                star.classList.add('filled');
+			                star.innerText = '💖';
+			            }
+			        } else {
+			            alert("收藏失敗！");
+			        }
+			    }).catch(err => {
+			        alert("系統錯誤，請稍後再試！");
+			        console.error(err);
+			    });
+			}
+</script>
 		</div>
 	</div>
 
