@@ -268,6 +268,9 @@ body {
 					<li class="nav-item"><a class="nav-link" href="#">BBC</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
 				</ul>
+				<a class="btn btn-warning position-fixed bottom-0 end-0 m-4" href="/cart" style="z-index: 999;">
+  📰 查看新聞清單
+</a>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item" th:if="${session.name}"><a
 						class="nav-link disabled text-warning" href="#"> 歡迎~<strong
@@ -298,13 +301,10 @@ body {
 				<div th:each="news : ${newsList}"
 					th:if="${news != null and news.title != null and news.title != ''}"
 					class="news-card">
-					<!-- 🟢 收藏按鈕 -->
-					<button type="button" class="star-button"
-						onclick="toggleFavorite([[${news.id}]], [[${session.userId}]])">
-						<span th:id="'star-' + ${news.id}"
-							th:text="${news.favorited} ? '💖' : '🤍'"
-							th:class="${news.favorited} ? 'star filled' : 'star'"></span>
-					</button>
+					
+					<button class="btn btn-sm btn-outline-primary add-to-cart-btn" th:attr="data-id=${news.id}">
+  加入清單
+</button>
 					<a th:href="${news.url}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">
@@ -331,6 +331,10 @@ body {
 				<div th:each="news : ${bbcNewsList}"
 					th:if="${news.title != null} and ${news.title} != ''"
 					class="news-card">
+					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
+        th:attr="data-id=${news.link.hashCode()}">
+  加入清單
+</button>
 					<a th:href="${news.link}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">
@@ -352,6 +356,10 @@ body {
 				<div th:each="news : ${nhkNewsList}"
 					th:if="${news.title != null} and ${news.title} != ''"
 					class="news-card">
+					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
+        th:attr="data-id=${news.link.hashCode()}">
+  加入清單
+</button>
 					<a th:href="${news.link}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">
@@ -367,38 +375,31 @@ body {
 					</a>
 				</div>
 			</div>
-			<script>
-			function toggleFavorite(newsId, userId) {
-			    if (!userId || userId === 'null') {
-			        alert("請先登入才能收藏！");
-			        return;
-			    }
+			
 
-			    fetch(`/users/${userId}/favorites/${newsId}`, {
-			        method: 'POST'
-			    }).then(response => {
-			        if (response.ok) {
-			            const star = document.getElementById(`star-${newsId}`);
-			            if (star.classList.contains('filled')) {
-			                star.classList.remove('filled');
-			                star.innerText = '🤍';
-			            } else {
-			                star.classList.add('filled');
-			                star.innerText = '💖';
-			            }
-			        } else {
-			            alert("收藏失敗！");
-			        }
-			    }).catch(err => {
-			        alert("系統錯誤，請稍後再試！");
-			        console.error(err);
-			    });
-			}
-</script>
 		</div>
 	</div>
 
 	</div>
+<script>
+// ✅ DOM 加載後綁定按鈕
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+    btn.addEventListener("click", function (event) {
+      event.stopPropagation(); // ✅ 防止觸發卡片連結
+      const id = parseInt(this.dataset.id);
+      let cart = JSON.parse(localStorage.getItem("newsCart") || "[]");
 
+      if (!cart.includes(id)) {
+        cart.push(id);
+        localStorage.setItem("newsCart", JSON.stringify(cart));
+        alert("📰 已加入清單！");
+      } else {
+        alert("✅ 這則已經在清單裡囉");
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
