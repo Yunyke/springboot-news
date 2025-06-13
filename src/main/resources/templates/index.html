@@ -95,7 +95,7 @@ h2.news-section-title {
 }
 
 .news-card:hover .hover-description {
-	display: block;
+	display: visible;
 }
 
 .news-img {
@@ -182,35 +182,40 @@ h2.news-section-title {
 }
 
 .star-button {
-	background: none;
-	border: none;
-	cursor: pointer;
-	font-size: 1.5rem;
-	padding: 0;
+  position: absolute;
+  top: 0;
+  right: -24px; /* 凸出右側約一半寬度 */
+  width: 32px;   /* ✅ 書籤的寬度 */
+  height: 36px;  /* ✅ 書籤的高度，比字體稍長，像標籤紙 */
+  background-color: rgba(255, 105, 180, 0.6); /* ✅ 半透明 hotpink */
+  border: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1; /* ✅ 讓它「被蓋住」，部分藏在卡片底下 */
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(2px);
+  transition: transform 0.2s ease;
 }
 
 .star {
-    color: gray;
-    transition: color 0.3s, transform 0.2s;
+	 color: white; 
+	transition: color 0.3s, transform 0.2s;
 }
 
 .star.filled {
-    color: hotpink; /* 可以換成 crimson、deeppink、red 看你喜歡哪種 */
+	color: gray; /* 可以換成 crimson、deeppink、red 看你喜歡哪種 */
 }
 
 .star:hover {
-    color: pink;
-    transform: scale(1.2);
+	color: pink;
+	transform: scale(1.2);
 }
 
-/* 隱藏 Google 翻譯 */
-#google_translate_element {
-	display: none !important;
-}
-
-.goog-te-banner-frame.skiptranslate {
-	display: none !important;
-}
 
 body {
 	top: 0 !important;
@@ -294,11 +299,12 @@ body {
 					th:if="${news != null and news.title != null and news.title != ''}"
 					class="news-card">
 					<!-- 🟢 收藏按鈕 -->
-					<button type="button" class="star-button" onclick="toggleFavorite([[${news.id}]], [[${session.userId}]])">
-  <span th:id="'star-' + ${news.id}"
-        th:text="${news.favorited} ? '💖' : '🤍'"
-        th:class="${news.favorited} ? 'star filled' : 'star'"></span>
-</button>
+					<button type="button" class="star-button"
+						onclick="toggleFavorite([[${news.id}]], [[${session.userId}]])">
+						<span th:id="'star-' + ${news.id}"
+							th:text="${news.favorited} ? '💖' : '🤍'"
+							th:class="${news.favorited} ? 'star filled' : 'star'"></span>
+					</button>
 					<a th:href="${news.url}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">

@@ -17,14 +17,14 @@ public class NHKRssService {
         List<Map<String, String>> newsList = new ArrayList<>();
 
         try {
-            String url = "https://feedx.net/rss/nhk.xml";
+            String url = "https://www.nhk.or.jp/rss/news/cat6.xml";
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new URL(url).openStream());
 
             NodeList items = doc.getElementsByTagName("item");
 
-            for (int i = 0; i < items.getLength(); i++) {
+            for (int i = 0; i < items.getLength() && i < 50; i++)  {
                 Element item = (Element) items.item(i);
 
                 String title = getTagValue("title", item);
