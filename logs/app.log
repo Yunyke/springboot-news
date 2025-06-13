@@ -2902,6 +2902,7 @@ org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property o
 2025-06-13T16:31:32.714+08:00  INFO 14352 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-06-13T16:31:32.715+08:00  INFO 14352 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-06-13T16:31:32.718+08:00  INFO 14352 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+<<<<<<< HEAD
 2025-06-13T16:31:34.059+08:00  INFO 7200 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Starting SpringbootNewsApplication using Java 21.0.7 with PID 7200 (C:\Users\NTPU\eclipse-workspace\springboot-news\target\classes started by NTPU in C:\Users\NTPU\eclipse-workspace\springboot-news)
 2025-06-13T16:31:34.061+08:00  INFO 7200 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : No active profile set, falling back to 1 default profile: "default"
 2025-06-13T16:31:34.437+08:00  INFO 7200 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
@@ -3090,3 +3091,5 @@ org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property o
 2025-06-13T16:45:51.274+08:00  INFO 16064 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-06-13T16:45:51.275+08:00  INFO 16064 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-06-13T16:45:51.279+08:00  INFO 16064 --- [springboot-jpa-book] [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+=======
+>>>>>>> origin/master

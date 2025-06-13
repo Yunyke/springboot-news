@@ -33,7 +33,7 @@ function loadCart() {
                 <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${news.title}">標題</h5>
-                    <p class="card-text" th:text="${news.description}">摘要</p>
+                    <p class="card-text" th:text="${news.description}">摘要!</p>
                     <a th:href="${news.url}" target="_blank" class="btn btn-primary">閱讀全文</a>
                 </div>
             </div>
