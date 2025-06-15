@@ -4,20 +4,56 @@
     <meta charset="UTF-8">
     <title>News Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ✅ IG 風格微調 */
+        .news-card {
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .news-card:hover {
+            transform: scale(1.02);
+        }
+        .news-img {
+            object-fit: cover;
+            height: 200px;
+            width: 100%;
+        }
+        .news-body {
+            padding: 1rem;
+        }
+
+        /* ✅ 加上置中與完整展開文章樣式 */
+        .card-title,
+        .card-text {
+            text-align: center;
+        }
+
+        .card-text {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+            word-break: break-word;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body onload="loadCart()">
 <div class="container my-4">
-    <h1>新聞彙整</h1>
-    <!-- 這裡塞 fragment -->
-    <div id="cart-content"></div>
+    <h1 class="mb-4 text-center">📰 新聞彙整</h1>
+    <div id="cart-content" class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+        <!-- 動態載入內容 -->
+    </div>
 </div>
 
 <script>
 function loadCart() {
-	const ids = JSON.parse(localStorage.getItem("newsCart") || "[]").filter(id => Number.isInteger(id) && id > 0);
+    const ids = JSON.parse(localStorage.getItem("newsCart") || "[]").filter(id => Number.isInteger(id) && id > 0);
     fetch("/cart/load", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(ids)
     })
     .then(res => res.text())
@@ -25,17 +61,16 @@ function loadCart() {
 }
 </script>
 
-<!-- cartFragment -->
+<!-- ✅ cartFragment 部分 -->
+<!-- cartFragment.html -->
 <div th:fragment="cartFragment">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div th:each="news : ${cartNews}" class="col">
-            <div class="card h-100">
-                <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${news.title}">標題</h5>
-                    <p class="card-text" th:text="${news.description}">摘要!</p>
-                    <a th:href="${news.url}" target="_blank" class="btn btn-primary">閱讀全文</a>
-                </div>
+    <div th:each="news : ${cartNews}" class="col">
+        <div class="card news-card">
+            <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-img" alt="news image">
+            <div class="news-body">
+                <h5 class="card-title" th:text="${news.title}">標題</h5>
+                <p class="card-text" th:text="${news.description}">這裡會顯示完整摘要，不收起來</p>
+                <a th:href="${news.url}" target="_blank" class="btn btn-outline-primary w-100">📖 閱讀全文</a>
             </div>
         </div>
     </div>

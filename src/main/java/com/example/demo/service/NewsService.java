@@ -34,22 +34,10 @@ public class NewsService {
     }
 
     private void saveCnnNews() {
-        List<CnnNews> cnnNewsList = cnnCrawlerService.getCnnNews();
+    	List<News> cnnNewsList = cnnCrawlerService.fetchAndSaveIfNotExist();
         System.out.println("CNN News fetched: " + cnnNewsList.size());
 
-        for (CnnNews cnn : cnnNewsList) {
-            if (!newsRepository.findByUrl(cnn.getUrl()).isPresent()) {
-                News news = new News();
-                news.setTitle(cnn.getTitle());
-                news.setDescription(cnn.getDescription());
-                news.setUrl(cnn.getUrl());
-                news.setImageUrl(cnn.getUrlToImage());
-                news.setSource("CNN");
-                news.setAuthor(cnn.getAuthor());
-                news.setPublishedAt(parseZonedTime(cnn.getPublishedAt()));
-                newsRepository.save(news);
-            }
-        }
+        
     }
 
     private void saveBbcNews() {

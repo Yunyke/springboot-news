@@ -302,23 +302,21 @@ body {
 					th:if="${news != null and news.title != null and news.title != ''}"
 					class="news-card">
 					
-					<button class="btn btn-sm btn-outline-primary add-to-cart-btn" th:attr="data-id=${news.id}">
+					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
+        th:attr="data-id=${news.id}">
   加入清單
 </button>
-					<a th:href="${news.url}" target="_blank"
-						style="text-decoration: none; color: inherit;">
-						<div style="display: flex; align-items: center;">
-							<img th:if="${news.urlToImage != null}"
-								th:src="${news.urlToImage}" class="news-img" alt="新聞圖片"
-								onerror="this.style.display='none'" />
-							<div class="news-content">
-								<h5 class="news-title" th:text="${news.title}">標題</h5>
-								<div class="hover-description" th:text="${news.description}">摘要</div>
-								<p class="text-muted news-time" th:text="${news.publishedAt}">發布時間</p>
 
-							</div>
-						</div>
-					</a>
+<a th:href="${news.url}" target="_blank">
+  <div style="display: flex;">
+    <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}" class="news-img" />
+    <div class="news-content">
+      <h5 th:text="${news.title}"></h5>
+      <p class="hover-description" th:text="${news.description}"></p>
+      <p class="news-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}"></p>
+    </div>
+  </div>
+</a>
 				</div>
 
 

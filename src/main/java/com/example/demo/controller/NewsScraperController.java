@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.dto.CnnNews;
 import com.example.demo.model.dto.UserCert;
+import com.example.demo.repository.NewsRepository;
 import com.example.demo.service.BBCRssService;
 import com.example.demo.service.CnnCrawlerService;
 import com.example.demo.service.NHKRssService;
@@ -26,15 +27,16 @@ public class NewsScraperController {
 	private final NHKRssService nhkRssService;
 	
 	private final CnnCrawlerService cnnCrawlerService;
+	private final NewsRepository newsRepository;
 
 
 	// 建構子注入，把務注入進來給這個 Controller 使用。
 	public NewsScraperController(BBCRssService bbcRssService, NHKRssService nhkRssService,
-			CnnCrawlerService cnnCrawlerService) {
+			CnnCrawlerService cnnCrawlerService, NewsRepository newsRepository) {
 		this.bbcRssService = bbcRssService;
 		this.nhkRssService = nhkRssService;
-		
 		this.cnnCrawlerService = cnnCrawlerService;
+		this.newsRepository = newsRepository;
 	}
 
 	// 處理「打開首頁 / 或 /news」時的請求，主要負責：
@@ -48,10 +50,12 @@ public class NewsScraperController {
 
 		// BBC / NHK / WSJ 都是 RSS Service 拿資料出來塞到 model 裡。這樣前端頁面就能用 th:each 等語法去讀取並渲染。
 		model.addAttribute("bbcNewsList", bbcRssService.getBbcNews());
+		
 		model.addAttribute("nhkNewsList", nhkRssService.getNhkNews());
 		
-		List<CnnNews> newsList = cnnCrawlerService.getCnnNews();		
-    	model.addAttribute("newsList", newsList);
+		 cnnCrawlerService.fetchAndSaveIfNotExist(); // ✔ CNN先抓+存
+		 model.addAttribute("newsList", newsRepository.findBySource("CNN"));
+    	
     	
 		return "index"; // 回傳 Thymeleaf 或其他 template 名稱
 	}

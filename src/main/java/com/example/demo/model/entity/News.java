@@ -4,6 +4,8 @@ package com.example.demo.model.entity;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -25,12 +27,14 @@ public class News {
     private Long id;
 
     private String title;
-    @Column(length = 5000)
+    @Column(length = 100)
     private String description;
     @Column(length = 500,unique = true, nullable = false)
     private String url;
     private String imageUrl;
     private String source;
     private String author;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private ZonedDateTime publishedAt;
+    
 }

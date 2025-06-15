@@ -21,7 +21,7 @@ public class CartController {
     public String cartPage() {
         return "cart";  
     }
-<<<<<<< HEAD
+
     
    
     @PostMapping("/load")
@@ -29,21 +29,15 @@ public class CartController {
         System.out.println("🟡 收到的 ID 清單：" + newsIds);
 
         List<News> newsList = newsService.getNewsByIds(newsIds);
-        
+        System.out.println("🟢 撈回來的新聞筆數：" + newsList.size());
         for (News news : newsList) {
             System.out.println("📰 " + news.getId() + ": " + news.getTitle());
         }
 
         model.addAttribute("cartNews", newsList);
         return "cart :: cartFragment";
-=======
+    }
 
    
-    @PostMapping("/load")
-    public String loadCart(@RequestBody List<Long> newsIds, Model model) {
-        List<News> newsList = newsService.getNewsByIds(newsIds);  
-        model.addAttribute("cartNews", newsList);                
-        return "cart :: cartFragment";                            
->>>>>>> origin/master
-    }
+    
 }
