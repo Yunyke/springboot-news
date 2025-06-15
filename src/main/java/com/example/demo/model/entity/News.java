@@ -34,6 +34,8 @@ public class News {
     private String imageUrl;
     private String source;
     private String author;
+    @Column(columnDefinition = "TEXT")
+    private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private ZonedDateTime publishedAt;
     

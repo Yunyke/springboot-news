@@ -1,77 +1,94 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>News Cart – Newspaper Style</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>📰 新聞牆 – Facebook Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f0f2f5;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-    <style>
-        /* ===================== 共用 ===================== */
-        body {
-            background: #f1f1f1;                     /* 仿報紙灰底 */
-            font-family: "Times New Roman", serif;  /* 報紙常見字體 */
-        }
+    .feed-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
 
-        /* ===================== 報紙風版面 ===================== */
-        /* // 修改：原 .news-card → .news-article  */
-        .news-article {               /* 單條新聞 */
-            display: flex;
-            gap: 1rem;
-            padding: 1.25rem 0;       /* 條與條間距 */
-            border-bottom: 1px solid #ccc; /* 細底線分隔 */
-            transition: background 0.15s;
-            background: #fff;         /* 白紙感 */
-        }
-        .news-article:hover {
-            background: #f7f7f7;      /* 略帶灰，像舊報紙翻頁 */
-        }
+    .news-feed-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.25rem;
+      transition: box-shadow 0.2s ease-in-out;
+    }
 
-        .news-img {
-            width: 140px;             /* // 修改：固定小尺寸 */
-            height: 140px;
-            object-fit: cover;        /* 填滿不變形 */
-            flex-shrink: 0;
-        }
+    .news-feed-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
 
-        .news-body {
-            flex: 1;
-        }
+    .news-feed-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #1c1e21;
+      margin-bottom: 0.5rem;
+    }
 
-        /* 標題 – 粗體、大字、緊湊行高 */
-        .news-title {                 /* // 修改：新增 */
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: .5rem;
-            line-height: 1.2;
-        }
+    .news-feed-img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 0.75rem 0;
+    }
 
-        /* 內文摘要 – 常規字級 */
-        .news-desc {                  /* // 修改：新增 */
-            font-size: .95rem;
-            line-height: 1.5;
-            margin-bottom: .75rem;
-        }
+    .news-feed-desc {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
 
-        /* 時間 – 小字灰色 */
-        .news-time {
-            font-size: .8rem;
-            color: #666;
-        }
+    .news-feed-time {
+      font-size: 0.85rem;
+      color: #777;
+    }
 
-        /* 操作按鈕區 */
-        .action-btns {
-            display: flex;
-            gap: .5rem;
-        }
-    </style>
+    .news-feed-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 576px) {
+      .news-feed-card {
+        padding: 1rem;
+      }
+
+      .news-feed-title {
+        font-size: 1.1rem;
+      }
+
+      .news-feed-desc {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
-<body onload="loadCart()">
-<main class="container-lg py-4">
-    <h1 class="display-5 text-center mb-4">📰 新聞彙整</h1>
 
-    <!-- 動態內容會塞進這裡 -->
-    <div id="cart-content"></div>
+<body onload="loadCart()">
+
+<main class="feed-container">
+  <h1 class="text-center mb-4">📰 我的新聞牆</h1>
+
+  <div id="cart-content">
+    <!-- 請求資料後這裡會被填滿 -->
+  </div>
 </main>
 
 <script>
@@ -79,7 +96,6 @@ function loadCart() {
   const ids = JSON.parse(localStorage.getItem("newsCart") || "[]")
               .filter(id => Number.isInteger(id) && id > 0);
 
-  // 空狀態
   if (ids.length === 0) {
     document.getElementById("cart-content").innerHTML = `
       <p class="text-center text-muted mt-5">📭 目前沒有收藏新聞</p>`;
@@ -95,7 +111,7 @@ function loadCart() {
   .then(html => {
     document.getElementById("cart-content").innerHTML = html;
 
-    // 綁定移除事件
+    // 移除按鈕
     document.querySelectorAll(".remove-from-cart-btn").forEach(btn => {
       btn.addEventListener("click", function () {
         const id = parseInt(this.dataset.id);
@@ -109,22 +125,25 @@ function loadCart() {
 }
 </script>
 
-<!-- ===================== cartFragment ===================== -->
+<!-- Thymeleaf Fragment 用來填入 cart-content -->
 <div th:fragment="cartFragment">
-  <div th:each="news : ${cartNews}" class="news-article">
-    <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-img" />
+  <div th:each="news : ${cartNews}" class="news-feed-card">
+   
 
-    <div class="news-body">
-      <h2 class="news-title" th:text="${news.title}">標題</h2>
-      <p class="news-desc" th:text="${news.description}">內文摘要</p>
-      <p class="news-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">日期</p>
+    <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-feed-img" />
+    
+     <div class="news-feed-title" th:text="${news.title}">標題</div>
 
-      <div class="action-btns">
-        <a th:href="${news.url}" target="_blank" class="btn btn-sm btn-outline-primary">閱讀全文</a>
-        <button class="btn btn-sm btn-danger remove-from-cart-btn" th:attr="data-id=${news.id}">🗑 移除</button>
-      </div>
+    <div class="news-feed-desc" th:text="${news.description}">新聞摘要</div>
+
+    <div class="news-feed-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">發布時間</div>
+
+    <div class="news-feed-actions">
+      <a th:href="${news.url}" target="_blank" class="btn btn-sm btn-outline-primary">閱讀全文</a>
+      <button class="btn btn-sm btn-outline-danger remove-from-cart-btn" th:attr="data-id=${news.id}">移除</button>
     </div>
   </div>
 </div>
+
 </body>
 </html>
