@@ -59,6 +59,15 @@
       color: #777;
     }
 
+    .news-feed-content {
+      display: none;
+      margin-top: 0.75rem;
+      white-space: pre-wrap;
+      color: #333;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
     .news-feed-actions {
       display: flex;
       gap: 0.5rem;
@@ -111,7 +120,7 @@ function loadCart() {
   .then(html => {
     document.getElementById("cart-content").innerHTML = html;
 
-    // 移除按鈕
+    // 綁定移除
     document.querySelectorAll(".remove-from-cart-btn").forEach(btn => {
       btn.addEventListener("click", function () {
         const id = parseInt(this.dataset.id);
@@ -121,25 +130,36 @@ function loadCart() {
         loadCart();
       });
     });
+
+    // 綁定展開全文
+    document.querySelectorAll(".toggle-content-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const content = this.closest(".news-feed-card").querySelector(".news-feed-content");
+        const isShown = content.style.display === "block";
+        content.style.display = isShown ? "none" : "block";
+        this.textContent = isShown ? "閱讀全文" : "收起全文";
+      });
+    });
   });
 }
 </script>
 
-<!-- Thymeleaf Fragment 用來填入 cart-content -->
+<!-- Thymeleaf Fragment for cart -->
 <div th:fragment="cartFragment">
   <div th:each="news : ${cartNews}" class="news-feed-card">
-   
-
     <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-feed-img" />
-    
-     <div class="news-feed-title" th:text="${news.title}">標題</div>
 
-    <div class="news-feed-desc" th:text="${news.description}">新聞摘要</div>
+    <div class="news-feed-title" th:text="${news.title}">標題</div>
 
-    <div class="news-feed-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">發布時間</div>
+    <div class="news-feed-desc" th:text="${news.description}">摘要</div>
+
+    <div class="news-feed-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">時間</div>
+
+    <!-- ✅ 新增：內文 -->
+    <div class="news-feed-content" th:if="${news.content}" th:text="${news.content}">內文</div>
 
     <div class="news-feed-actions">
-      <a th:href="${news.url}" target="_blank" class="btn btn-sm btn-outline-primary">閱讀全文</a>
+      <button class="btn btn-sm btn-outline-primary toggle-content-btn">閱讀全文</button>
       <button class="btn btn-sm btn-outline-danger remove-from-cart-btn" th:attr="data-id=${news.id}">移除</button>
     </div>
   </div>
