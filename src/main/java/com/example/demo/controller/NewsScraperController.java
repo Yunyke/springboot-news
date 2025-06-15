@@ -6,7 +6,7 @@ import com.example.demo.repository.NewsRepository;
 import com.example.demo.service.BBCRssService;
 import com.example.demo.service.CnnCrawlerService;
 import com.example.demo.service.NHKRssService;
-
+import com.example.demo.service.NewsService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -21,23 +21,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j // Lombok 自動幫你加上 log 變數
 public class NewsScraperController {
 
-	private static final String CNN_URL = "https://edition.cnn.com/2025/06/08/middleeast/freedom-flotilla-gaza-aid-ship-thunberg-intl-hnk";
-
-	private final BBCRssService bbcRssService;
-	private final NHKRssService nhkRssService;
 	
-	private final CnnCrawlerService cnnCrawlerService;
+
+	
+	
+	private final NewsService newsService; 
 	private final NewsRepository newsRepository;
 
 
 	// 建構子注入，把務注入進來給這個 Controller 使用。
-	public NewsScraperController(BBCRssService bbcRssService, NHKRssService nhkRssService,
-			CnnCrawlerService cnnCrawlerService, NewsRepository newsRepository) {
-		this.bbcRssService = bbcRssService;
-		this.nhkRssService = nhkRssService;
-		this.cnnCrawlerService = cnnCrawlerService;
-		this.newsRepository = newsRepository;
-	}
+	public NewsScraperController(NewsService newsService,
+            NewsRepository newsRepository) {
+			this.newsService   = newsService;
+			this.newsRepository = newsRepository;
+}
 
 	// 處理「打開首頁 / 或 /news」時的請求，主要負責：
 	// 1.加載各新聞來源的資料
@@ -48,14 +45,13 @@ public class NewsScraperController {
 
 		model.addAttribute("title", "Daily News");
 
-		// BBC / NHK / WSJ 都是 RSS Service 拿資料出來塞到 model 裡。這樣前端頁面就能用 th:each 等語法去讀取並渲染。
-		model.addAttribute("bbcNewsList", bbcRssService.getBbcNews());
-		
-		model.addAttribute("nhkNewsList", nhkRssService.getNhkNews());
-		
-		 cnnCrawlerService.fetchAndSaveIfNotExist(); // ✔ CNN先抓+存
-		 model.addAttribute("newsList", newsRepository.findBySource("CNN"));
-    	
+		/* 1) 先確定三家新聞都抓好、寫進 DB ------------------------- */
+        newsService.fetchAndSaveAllNews();   // CNN / BBC / NHK
+
+        /* 2) 依 source 從同一張表撈出來 --------------------------- */
+        model.addAttribute("cnnNewsList", newsRepository.findBySource("CNN"));
+        model.addAttribute("bbcNewsList", newsRepository.findBySource("BBC"));
+        model.addAttribute("nhkNewsList", newsRepository.findBySource("NHK"));
     	
 		return "index"; // 回傳 Thymeleaf 或其他 template 名稱
 	}

@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
+
+import com.example.demo.model.dto.BbcNews;
+
 import javax.xml.parsers.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -10,16 +13,16 @@ import java.util.*;
 @Service
 public class BBCRssService {
 
-    public List<Map<String, String>> getBbcNews() {
-        List<Map<String, String>> newsList = new ArrayList<>();
+    public List<BbcNews> getBbcNews() {
+        List<BbcNews> newsList = new ArrayList<>();
 
         try {
-            String url = "https://feeds.bbci.co.uk/news/rss.xml";
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new URL(url).openStream());
+            String url = "https://feeds.bbci.co.uk/news/rss.xml";  //RSS feed 格式（XML 檔）
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  // 建立一個 DocumentBuilderFactory 實體
+            DocumentBuilder builder = factory.newDocumentBuilder(); //從工廠產生出一個 DocumentBuilder。這個 builder 負責把 XML「讀進來 → 解析 → 變成 DOM 文件」。            
+            Document doc = builder.parse(new URL(url).openStream()); //開啟 url 對應的網址並把資料讀進來，再交給 builder 解析
 
-            NodeList items = doc.getElementsByTagName("item");
+            NodeList items = doc.getElementsByTagName("item");   //擷取 <item> 區塊
 
             for (int i = 0; i < items.getLength(); i++) {
                 Element item = (Element) items.item(i);
@@ -27,28 +30,31 @@ public class BBCRssService {
                 String title = getTagValue("title", item);
                 String description = getTagValue("description", item);
                 String pubDate = getTagValue("pubDate", item);
-                String imageUrl = "";
                 String link = getTagValue("link", item);
-                
+
+                String imageUrl = "";
                 NodeList mediaList = item.getElementsByTagName("media:thumbnail");
                 if (mediaList.getLength() > 0) {
                     Element media = (Element) mediaList.item(0);
                     imageUrl = media.getAttribute("url");
                 }
+                
+                
+                //建立 DTO 並放入清單
+                BbcNews news = new BbcNews(); 
+                news.setTitle(title);
+                news.setDescription(description);
+                news.setPubDate(pubDate);
+                news.setImageUrl(imageUrl);
+                news.setLink(link);
 
-                Map<String, String> newsItem = new HashMap<>();
-                newsItem.put("title", title);
-                newsItem.put("description", description);
-                newsItem.put("pubDate", pubDate);
-                newsItem.put("imageUrl", imageUrl);
-                newsItem.put("link", link);
-                newsList.add(newsItem);
+                newsList.add(news);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return newsList;
     }
 

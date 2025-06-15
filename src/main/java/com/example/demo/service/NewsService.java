@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.model.entity.News;
 import com.example.demo.repository.NewsRepository;
+import com.example.demo.model.dto.BbcNews;
 import com.example.demo.model.dto.CnnNews;
+import com.example.demo.model.dto.NhkNews;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -41,38 +43,40 @@ public class NewsService {
     }
 
     private void saveBbcNews() {
-        List<Map<String, String>> bbcNewsList = bbcRssService.getBbcNews();
+        List<BbcNews> bbcNewsList = bbcRssService.getBbcNews();
         System.out.println("BBC News fetched: " + bbcNewsList.size());
-        for (Map<String, String> item : bbcNewsList) {
-            String url = item.get("link");
+
+        for (BbcNews item : bbcNewsList) {
+            String url = item.getLink();
             if (!newsRepository.findByUrl(url).isPresent()) {
                 News news = new News();
-                news.setTitle(item.get("title"));
-                news.setDescription(item.get("description"));
+                news.setTitle(item.getTitle());
+                news.setDescription(item.getDescription());
                 news.setUrl(url);
-                news.setImageUrl(item.get("imageUrl"));
+                news.setImageUrl(item.getImageUrl());
                 news.setSource("BBC");
-                news.setPublishedAt(parseZonedTime(item.get("pubDate")));
+                news.setPublishedAt(parseZonedTime(item.getPubDate()));
                 newsRepository.save(news);
             }
         }
     }
 
+
     private void saveNhkNews() {
-        List<Map<String, String>> nhkNewsList = nhkRssService.getNhkNews();
+        List<NhkNews> nhkNewsList = nhkRssService.getNhkNews();
         System.out.println("NHK News fetched: " + nhkNewsList.size());
-        for (Map<String, String> item : nhkNewsList) {
-            String url = item.get("link");
+
+        for (NhkNews item : nhkNewsList) {
+            String url = item.getLink();
             if (!newsRepository.findByUrl(url).isPresent()) {
                 News news = new News();
-                news.setTitle(item.get("title"));
-                news.setDescription(item.get("description"));
+                news.setTitle(item.getTitle());
+                news.setDescription(item.getDescription());
                 news.setUrl(url);
-                news.setImageUrl(item.get("imageUrl"));
+                news.setImageUrl(item.getImageUrl());
                 news.setSource("NHK");
-                news.setPublishedAt(parseZonedTime(item.get("pubDate")));
+                news.setPublishedAt(parseZonedTime(item.getPubDate()));  // 如果格式是 RFC 1123，這行會 work
                 newsRepository.save(news);
-                
             }
         }
     }

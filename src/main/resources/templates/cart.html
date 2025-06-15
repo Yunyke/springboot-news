@@ -1,79 +1,130 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>News Cart</title>
+    <title>News Cart – Newspaper Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* ✅ IG 風格微調 */
-        .news-card {
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.2s;
+        /* ===================== 共用 ===================== */
+        body {
+            background: #f1f1f1;                     /* 仿報紙灰底 */
+            font-family: "Times New Roman", serif;  /* 報紙常見字體 */
         }
-        .news-card:hover {
-            transform: scale(1.02);
+
+        /* ===================== 報紙風版面 ===================== */
+        /* // 修改：原 .news-card → .news-article  */
+        .news-article {               /* 單條新聞 */
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem 0;       /* 條與條間距 */
+            border-bottom: 1px solid #ccc; /* 細底線分隔 */
+            transition: background 0.15s;
+            background: #fff;         /* 白紙感 */
         }
+        .news-article:hover {
+            background: #f7f7f7;      /* 略帶灰，像舊報紙翻頁 */
+        }
+
         .news-img {
-            object-fit: cover;
-            height: 200px;
-            width: 100%;
+            width: 140px;             /* // 修改：固定小尺寸 */
+            height: 140px;
+            object-fit: cover;        /* 填滿不變形 */
+            flex-shrink: 0;
         }
+
         .news-body {
-            padding: 1rem;
+            flex: 1;
         }
 
-        /* ✅ 加上置中與完整展開文章樣式 */
-        .card-title,
-        .card-text {
-            text-align: center;
+        /* 標題 – 粗體、大字、緊湊行高 */
+        .news-title {                 /* // 修改：新增 */
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            line-height: 1.2;
         }
 
-        .card-text {
-            white-space: normal;
-            overflow: visible;
-            text-overflow: unset;
-            word-break: break-word;
-            line-height: 1.6;
-            font-size: 1rem;
+        /* 內文摘要 – 常規字級 */
+        .news-desc {                  /* // 修改：新增 */
+            font-size: .95rem;
+            line-height: 1.5;
+            margin-bottom: .75rem;
+        }
+
+        /* 時間 – 小字灰色 */
+        .news-time {
+            font-size: .8rem;
+            color: #666;
+        }
+
+        /* 操作按鈕區 */
+        .action-btns {
+            display: flex;
+            gap: .5rem;
         }
     </style>
 </head>
 <body onload="loadCart()">
-<div class="container my-4">
-    <h1 class="mb-4 text-center">📰 新聞彙整</h1>
-    <div id="cart-content" class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-        <!-- 動態載入內容 -->
-    </div>
-</div>
+<main class="container-lg py-4">
+    <h1 class="display-5 text-center mb-4">📰 新聞彙整</h1>
+
+    <!-- 動態內容會塞進這裡 -->
+    <div id="cart-content"></div>
+</main>
 
 <script>
 function loadCart() {
-    const ids = JSON.parse(localStorage.getItem("newsCart") || "[]").filter(id => Number.isInteger(id) && id > 0);
-    fetch("/cart/load", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ids)
-    })
-    .then(res => res.text())
-    .then(html => document.getElementById("cart-content").innerHTML = html);
+  const ids = JSON.parse(localStorage.getItem("newsCart") || "[]")
+              .filter(id => Number.isInteger(id) && id > 0);
+
+  // 空狀態
+  if (ids.length === 0) {
+    document.getElementById("cart-content").innerHTML = `
+      <p class="text-center text-muted mt-5">📭 目前沒有收藏新聞</p>`;
+    return;
+  }
+
+  fetch("/cart/load", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ids)
+  })
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("cart-content").innerHTML = html;
+
+    // 綁定移除事件
+    document.querySelectorAll(".remove-from-cart-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const id = parseInt(this.dataset.id);
+        let cart = JSON.parse(localStorage.getItem("newsCart") || "[]");
+        cart = cart.filter(item => item !== id);
+        localStorage.setItem("newsCart", JSON.stringify(cart));
+        loadCart();
+      });
+    });
+  });
 }
 </script>
 
-<!-- ✅ cartFragment 部分 -->
-<!-- cartFragment.html -->
+<!-- ===================== cartFragment ===================== -->
 <div th:fragment="cartFragment">
-    <div th:each="news : ${cartNews}" class="col">
-        <div class="card news-card">
-            <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-img" alt="news image">
-            <div class="news-body">
-                <h5 class="card-title" th:text="${news.title}">標題</h5>
-                <p class="card-text" th:text="${news.description}">這裡會顯示完整摘要，不收起來</p>
-                <a th:href="${news.url}" target="_blank" class="btn btn-outline-primary w-100">📖 閱讀全文</a>
-            </div>
-        </div>
+  <div th:each="news : ${cartNews}" class="news-article">
+    <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="news-img" />
+
+    <div class="news-body">
+      <h2 class="news-title" th:text="${news.title}">標題</h2>
+      <p class="news-desc" th:text="${news.description}">內文摘要</p>
+      <p class="news-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">日期</p>
+
+      <div class="action-btns">
+        <a th:href="${news.url}" target="_blank" class="btn btn-sm btn-outline-primary">閱讀全文</a>
+        <button class="btn btn-sm btn-danger remove-from-cart-btn" th:attr="data-id=${news.id}">🗑 移除</button>
+      </div>
     </div>
+  </div>
 </div>
 </body>
 </html>

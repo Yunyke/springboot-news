@@ -1,20 +1,20 @@
 package com.example.demo.service;
 
+import com.example.demo.model.dto.NhkNews;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
-import javax.xml.parsers.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NHKRssService {
 
-    private static final SimpleDateFormat rssDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-    private static final SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-    public List<Map<String, String>> getNhkNews() {
-        List<Map<String, String>> newsList = new ArrayList<>();
+    public List<NhkNews> getNhkNews() {
+        List<NhkNews> newsList = new ArrayList<>();
 
         try {
             String url = "https://www.nhk.or.jp/rss/news/cat6.xml";
@@ -24,35 +24,25 @@ public class NHKRssService {
 
             NodeList items = doc.getElementsByTagName("item");
 
-            for (int i = 0; i < items.getLength() && i < 50; i++)  {
+            // ✅ 限制最多 50 筆
+            for (int i = 0; i < items.getLength() && i < 50; i++) {
                 Element item = (Element) items.item(i);
 
                 String title = getTagValue("title", item);
                 String description = getTagValue("description", item);
-                String pubDateRaw = getTagValue("pubDate", item);
-                String pubDate;
-                try {
-                    Date date = rssDateFormat.parse(pubDateRaw);
-                    pubDate = outputDateFormat.format(date);
-                } catch (Exception e) {
-                    pubDate = pubDateRaw;
-                }
+                String pubDate = getTagValue("pubDate", item);
+                String link = getTagValue("link", item);
 
-                // 解析 description 裡的 <img src="..."> 圖片網址
                 String imageUrl = "";
-                if (description != null && description.contains("<img")) {
-                    int imgTagStart = description.indexOf("<img");
-                    int srcStart = description.indexOf("src=\"", imgTagStart);
-                    if (srcStart > 0) {
-                        srcStart += 5;
-                        int srcEnd = description.indexOf("\"", srcStart);
-                        if (srcEnd > srcStart) {
-                            imageUrl = description.substring(srcStart, srcEnd);
-                        }
-                    }
+
+                // 1️⃣ 優先抓 <media:thumbnail>
+                NodeList mediaList = item.getElementsByTagName("media:thumbnail");
+                if (mediaList.getLength() > 0) {
+                    Element media = (Element) mediaList.item(0);
+                    imageUrl = media.getAttribute("url");
                 }
 
-                // Fallback: 如果有 enclosure 標籤也可用
+                // 2️⃣ fallback：抓 <enclosure type=\"image/jpeg\">
                 if (imageUrl.isEmpty()) {
                     NodeList enclosureList = item.getElementsByTagName("enclosure");
                     if (enclosureList.getLength() > 0) {
@@ -63,19 +53,19 @@ public class NHKRssService {
                     }
                 }
 
-                String link = getTagValue("link", item);
+                // ✅ 建立 DTO
+                NhkNews news = new NhkNews();
+                news.setTitle(title);
+                news.setDescription(description);
+                news.setPubDate(pubDate);
+                news.setImageUrl(imageUrl);
+                news.setLink(link);
 
-                Map<String, String> newsItem = new HashMap<>();
-                newsItem.put("title", title);
-                newsItem.put("description", description);
-                newsItem.put("pubDate", pubDate);
-                newsItem.put("imageUrl", imageUrl); 
-                newsItem.put("link", link);
-                newsList.add(newsItem);
+                newsList.add(news);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // 可以換成 logger
         }
 
         return newsList;
@@ -92,8 +82,3 @@ public class NHKRssService {
         return "";
     }
 }
-
-//----------------------------------------
-//json跳到nhk新聞
-//String articleId = "20250603_04";
-//String link = "https://www3.nhk.or.jp/nhkworld/zh/news/" + articleId + "/";

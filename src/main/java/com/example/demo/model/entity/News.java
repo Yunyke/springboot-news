@@ -27,7 +27,7 @@ public class News {
     private Long id;
 
     private String title;
-    @Column(length = 100)
+    @Column(length = 1000)
     private String description;
     @Column(length = 500,unique = true, nullable = false)
     private String url;

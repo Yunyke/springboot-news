@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head translate="no">
 <meta charset="UTF-8">
 <title th:text="${title}">Daily News</title>
@@ -182,28 +183,28 @@ h2.news-section-title {
 }
 
 .star-button {
-  position: absolute;
-  top: 0;
-  right: -24px; /* 凸出右側約一半寬度 */
-  width: 32px;   /* ✅ 書籤的寬度 */
-  height: 36px;  /* ✅ 書籤的高度，比字體稍長，像標籤紙 */
-  background-color: rgba(255, 105, 180, 0.6); /* ✅ 半透明 hotpink */
-  border: none;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  cursor: pointer;
-  z-index: 1; /* ✅ 讓它「被蓋住」，部分藏在卡片底下 */
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(2px);
-  transition: transform 0.2s ease;
+	position: absolute;
+	top: 0;
+	right: -24px; /* 凸出右側約一半寬度 */
+	width: 32px; /* ✅ 書籤的寬度 */
+	height: 36px; /* ✅ 書籤的高度，比字體稍長，像標籤紙 */
+	background-color: rgba(255, 105, 180, 0.6); /* ✅ 半透明 hotpink */
+	border: none;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	cursor: pointer;
+	z-index: 1; /* ✅ 讓它「被蓋住」，部分藏在卡片底下 */
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+	backdrop-filter: blur(2px);
+	transition: transform 0.2s ease;
 }
 
 .star {
-	 color: white; 
+	color: white;
 	transition: color 0.3s, transform 0.2s;
 }
 
@@ -215,7 +216,6 @@ h2.news-section-title {
 	color: pink;
 	transform: scale(1.2);
 }
-
 
 body {
 	top: 0 !important;
@@ -268,9 +268,8 @@ body {
 					<li class="nav-item"><a class="nav-link" href="#">BBC</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
 				</ul>
-				<a class="btn btn-warning position-fixed bottom-0 end-0 m-4" href="/cart" style="z-index: 999;">
-  📰 查看新聞清單
-</a>
+				<a class="btn btn-warning position-fixed bottom-0 end-0 m-4"
+					href="/cart" style="z-index: 999;"> 📰 查看新聞清單 </a>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item" th:if="${session.name}"><a
 						class="nav-link disabled text-warning" href="#"> 歡迎~<strong
@@ -298,25 +297,25 @@ body {
 			<div class="news-section">
 				<h2 class="news-section-title mb-3" translate="no">CNN</h2>
 
-				<div th:each="news : ${newsList}"
+				<div th:each="news : ${cnnNewsList}"
 					th:if="${news != null and news.title != null and news.title != ''}"
 					class="news-card">
-					
-					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-        th:attr="data-id=${news.id}">
-  加入清單
-</button>
 
-<a th:href="${news.url}" target="_blank">
-  <div style="display: flex;">
-    <img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}" class="news-img" />
-    <div class="news-content">
-      <h5 th:text="${news.title}"></h5>
-      <p class="hover-description" th:text="${news.description}"></p>
-      <p class="news-time" th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}"></p>
-    </div>
-  </div>
-</a>
+					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
+						th:attr="data-id=${news.id}">加入清單</button>
+
+					<a th:href="${news.url}" target="_blank">
+						<div style="display: flex;">
+							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
+								class="news-img" />
+							<div class="news-content">
+								<h5 th:text="${news.title}"></h5>
+								<p class="hover-description" th:text="${news.description}"></p>
+								<p class="news-time"
+									th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}"></p>
+							</div>
+						</div>
+					</a>
 				</div>
 
 
@@ -326,22 +325,27 @@ body {
 			<!-- BBC News -->
 			<div class="news-section">
 				<h2 class="news-section-title mb-3" translate="no">BBC</h2>
-				<div th:each="news : ${bbcNewsList}"
-					th:if="${news.title != null} and ${news.title} != ''"
-					class="news-card">
+				<div th:each="news : ${bbcNewsList}" class="news-card">
+
+					<!-- 加入清單用主鍵 id 就好 -->
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-        th:attr="data-id=${news.link.hashCode()}">
-  加入清單
-</button>
-					<a th:href="${news.link}" target="_blank"
-						style="text-decoration: none; color: inherit;">
-						<div style="display: flex; align-items: center;">
-							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
-								class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
+						th:attr="data-id=${news.id}">加入清單</button>
+
+					<!-- 統一用 url －－ Entity 裡的唯一欄位 -->
+					<a th:href="${news.url}" target="_blank">
+						<div style="display: flex">
+							<img th:if="${news.imageUrl}" th:src="${news.imageUrl}"
+								class="news-img" />
+
 							<div class="news-content">
 								<h5 class="news-title" th:text="${news.title}">標題</h5>
-								<div class="hover-description" th:text="${news.description}">內容</div>
-								<p class="text-muted news-time" th:text="${news.pubDate}">日期</p>
+
+								<p class="hover-description" th:text="${news.description}">摘要</p>
+
+								<!-- publishedAt ➜ 用 #temporals 格式化 -->
+								<p class="news-time"
+									th:text="${#temporals.format(news.publishedAt,'yyyy-MM-dd HH:mm')}">
+								</p>
 							</div>
 						</div>
 					</a>
@@ -352,34 +356,41 @@ body {
 			<div class="news-section">
 				<h2 class="news-section-title mb-3" translate="no">NHK</h2>
 				<div th:each="news : ${nhkNewsList}"
-					th:if="${news.title != null} and ${news.title} != ''"
+					th:if="${news.title != null and news.title != ''}"
 					class="news-card">
+
+					<!-- 🔧 用 news.url.hashCode() 而非不存在的 news.link -->
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-        th:attr="data-id=${news.link.hashCode()}">
-  加入清單
-</button>
-					<a th:href="${news.link}" target="_blank"
+            th:attr="data-id=${news.id}">
+      加入清單
+    </button>
+
+					<!-- 🔧 href 改為 news.url -->
+					<a th:href="${news.url}" target="_blank"
 						style="text-decoration: none; color: inherit;">
 						<div style="display: flex; align-items: center;">
 							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
 								class="news-img" alt="新聞圖片" onerror="this.style.display='none'" />
 							<div class="news-content">
 								<h5 class="news-title" th:text="${news.title}">標題</h5>
-
 								<div class="hover-description" th:text="${news.description}">內容</div>
-								<p class="text-muted news-time" th:text="${news.pubDate}">日期</p>
+
+								<!-- 🔧 統一使用 publishedAt 時間格式（若有） -->
+								<p class="text-muted news-time"
+									th:text="${#temporals.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">日期</p>
 							</div>
 						</div>
 					</a>
 				</div>
 			</div>
-			
+
+
 
 		</div>
 	</div>
 
 	</div>
-<script>
+	<script>
 // ✅ DOM 加載後綁定按鈕
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
