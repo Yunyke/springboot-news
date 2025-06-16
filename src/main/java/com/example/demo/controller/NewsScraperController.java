@@ -47,11 +47,11 @@ public class NewsScraperController {
 
 		/* 1) 先確定三家新聞都抓好、寫進 DB ------------------------- */
         newsService.fetchAndSaveAllNews();   // CNN / BBC / NHK
-
+        
         /* 2) 依 source 從同一張表撈出來 --------------------------- */
-        model.addAttribute("cnnNewsList", newsRepository.findBySource("CNN"));
-        model.addAttribute("bbcNewsList", newsRepository.findBySource("BBC"));
-        model.addAttribute("nhkNewsList", newsRepository.findBySource("NHK"));
+        model.addAttribute("cnnNewsList", newsRepository.findBySourceOrderByPublishedAtDesc("CNN"));
+        model.addAttribute("bbcNewsList", newsRepository.findBySourceOrderByPublishedAtDesc("BBC"));
+        model.addAttribute("nhkNewsList", newsRepository.findBySourceOrderByPublishedAtDesc("NHK"));
     	
 		return "index"; // 回傳 Thymeleaf 或其他 template 名稱
 	}

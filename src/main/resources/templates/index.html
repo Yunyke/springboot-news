@@ -12,6 +12,8 @@
 	rel="stylesheet">
 
 <style>
+
+
 body {
 	margin: 0;
 	padding: 0;
@@ -133,6 +135,10 @@ h2.news-section-title {
 	overflow: visible;
 	text-overflow: normal; /* 超過範圍顯示省略號 */
 	white-space: normal; /* 允許標題換行 */
+	
+	max-height: 2.4em;
+	padding-right: 80px; /* ✅ 預留按鈕位置 */
+  padding-left: 5px;    /* ✅ 減一點左右空間，讓 title 留更多行 */
 }
 
 .news-time {
@@ -161,6 +167,21 @@ h2.news-section-title {
 	font-size: 0.8rem;
 	color: #666;
 	margin-top: auto;
+}
+
+.add-to-cart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
 .star-button {
@@ -269,7 +290,9 @@ body {
 					<li class="nav-item"><a class="nav-link" href="#">NHK</a></li>
 				</ul>
 				<a class="btn btn-warning position-fixed bottom-0 end-0 m-4"
-					href="/cart" style="z-index: 999;"> 📰 查看新聞清單 </a>
+   href="/cart" style="z-index: 999;" id="cart-button">
+   📰 查看新聞清單 <span id="cart-count" class="badge bg-dark ms-1"></span>
+</a>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item" th:if="${session.name}"><a
 						class="nav-link disabled text-warning" href="#"> 歡迎~<strong
@@ -302,8 +325,7 @@ body {
 					class="news-card">
 
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-						th:attr="data-id=${news.id}">加入清單</button>
-
+    th:attr="data-id=${news.id}">🔖加入清單</button>
 					<a th:href="${news.url}" target="_blank">
 						<div style="display: flex;">
 							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
@@ -329,7 +351,7 @@ body {
 
 					<!-- 加入清單用主鍵 id 就好 -->
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-						th:attr="data-id=${news.id}">加入清單</button>
+    th:attr="data-id=${news.id}">🔖加入清單</button>
 
 					<!-- 統一用 url －－ Entity 裡的唯一欄位 -->
 					<a th:href="${news.url}" target="_blank">
@@ -361,9 +383,7 @@ body {
 
 					<!-- 🔧 用 news.url.hashCode() 而非不存在的 news.link -->
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-            th:attr="data-id=${news.id}">
-      加入清單
-    </button>
+    th:attr="data-id=${news.id}">🔖加入清單</button>
 
 					<!-- 🔧 href 改為 news.url -->
 					<a th:href="${news.url}" target="_blank"
@@ -391,24 +411,51 @@ body {
 
 	</div>
 	<script>
-// ✅ DOM 加載後綁定按鈕
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
-    btn.addEventListener("click", function (event) {
-      event.stopPropagation(); // ✅ 防止觸發卡片連結
-      const id = parseInt(this.dataset.id);
-      let cart = JSON.parse(localStorage.getItem("newsCart") || "[]");
+	document.addEventListener("DOMContentLoaded", function () {
+		  let cart = JSON.parse(localStorage.getItem("newsCart") || "[]");
 
-      if (!cart.includes(id)) {
-        cart.push(id);
-        localStorage.setItem("newsCart", JSON.stringify(cart));
-        alert("📰 已加入清單！");
-      } else {
-        alert("✅ 這則已經在清單裡囉");
-      }
-    });
-  });
-});
+		  document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+		    const id = parseInt(btn.dataset.id);
+		    const card = btn.closest(".news-card");
+
+		    // 初始狀態設置
+		    if (cart.includes(id)) {
+		      card.classList.add("added-to-cart");
+		      btn.innerText = "✅ 已加入";
+		    }
+
+		    // 點擊按鈕切換加入/移除狀態
+		    btn.addEventListener("click", function (event) {
+		      event.stopPropagation();
+
+		      if (!cart.includes(id)) {
+		        cart.push(id);
+		        card.classList.add("added-to-cart");
+		        btn.innerText = "✅ 已加入";
+		      } else {
+		        cart = cart.filter(itemId => itemId !== id);
+		        card.classList.remove("added-to-cart");
+		        btn.innerText = "🔖加入清單";
+		      }
+
+		      localStorage.setItem("newsCart", JSON.stringify(cart));
+		      updateCartCount();
+		    });
+		  });
+
+		  updateCartCount();
+		});
+
+		function updateCartCount() {
+		  const cart = JSON.parse(localStorage.getItem("newsCart") || "[]");
+		  const badge = document.getElementById("cart-count");
+		  if (badge) {
+		    badge.innerText = cart.length;
+		    badge.style.display = cart.length === 0 ? "none" : "inline-block";
+		  }
+		}
+
 </script>
+
 </body>
 </html>

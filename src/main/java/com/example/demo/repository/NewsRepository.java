@@ -14,6 +14,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     List<News> findByIdIn(List<Long> ids);
     boolean existsByUrl(String url);
     List<News> findBySource(String source);
+    List<News> findBySourceOrderByPublishedAtDesc(String source);
     List<News> findByPublishedAtBetween(ZonedDateTime start, ZonedDateTime end);
     List<News> findByTitleContaining(String keyword);
 }
