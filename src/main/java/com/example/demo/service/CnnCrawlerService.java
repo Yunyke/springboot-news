@@ -32,7 +32,7 @@ public class CnnCrawlerService {
         List<News> saved = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(new URL(API_URL + "?sources=cnn&language=en&apiKey=" + API_KEY).openStream()))) {
+                new InputStreamReader(new URL(API_URL + "?sources=cnn&language=en&pageSize=50&page=1&apiKey=" + API_KEY).openStream()))) {
 
             String jsonStr = br.lines().reduce("", String::concat);
             JSONArray articles = new JSONObject(jsonStr).getJSONArray("articles");

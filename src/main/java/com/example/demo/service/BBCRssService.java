@@ -12,7 +12,11 @@ import java.util.*;
 
 @Service
 public class BBCRssService {
+	 private final BBCCrawlerService crawler;
 
+	    public BBCRssService(BBCCrawlerService crawler) {
+	        this.crawler = crawler;
+	    }
     public List<BbcNews> getBbcNews() {
         List<BbcNews> newsList = new ArrayList<>();
 
@@ -47,7 +51,7 @@ public class BBCRssService {
                 news.setPubDate(pubDate);
                 news.setImageUrl(imageUrl);
                 news.setLink(link);
-
+                crawler.enrich(news);
                 newsList.add(news);
             }
 

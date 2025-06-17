@@ -56,6 +56,7 @@ public class NewsService {
                 news.setImageUrl(item.getImageUrl());
                 news.setSource("BBC");
                 news.setPublishedAt(parseZonedTime(item.getPubDate()));
+                news.setContent(item.getContent());
                 newsRepository.save(news);
             }
         }
