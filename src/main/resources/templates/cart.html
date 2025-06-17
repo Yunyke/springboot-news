@@ -278,7 +278,19 @@ function loadCart() {
   })
   .then(res => res.text())
   .then(html => {
-    document.getElementById("cart-content").innerHTML = html;
+	  document.getElementById("cart-content").innerHTML = html;
+
+	  // 💡 新增：自動移除 localStorage 裡撈不到的 ID
+	  const existingIds = Array.from(document.querySelectorAll(".remove-from-cart-btn"))
+	    .map(btn => parseInt(btn.dataset.id));
+
+	  let cartIds = JSON.parse(localStorage.getItem("newsCart") || "[]");
+	  const filtered = cartIds.filter(id => existingIds.includes(id));
+
+	  if (filtered.length !== cartIds.length) {
+	    localStorage.setItem("newsCart", JSON.stringify(filtered));
+	    console.warn("🧹 已從 localStorage 清除無效新聞 ID：", cartIds.filter(id => !existingIds.includes(id)));
+	  }
     
     const sidebar = document.getElementById("sidebar-nav");
     sidebar.innerHTML = "<h5>📑 新聞清單</h5><ul class='sidebar-list'></ul>";
@@ -378,7 +390,7 @@ function toggleChatbox() {
 </div>
 <!-- ✅ AI 助理對話框 -->
 <div id="ai-chatbox">
-  <div id="ai-chatbox-header"> AI 助理</div>
+  <div id="ai-chatbox-header"> 🤖 AI 助理</div>
   <div id="ai-chatbox-messages">
     <div><strong>AI:</strong> 嗨！需要幫忙嗎？</div>
   </div>

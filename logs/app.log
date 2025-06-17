@@ -2422,3 +2422,144 @@ Identify and stop the process that's listening on port 8000 or configure this ap
 2025-06-17T16:28:26.053+08:00  INFO 13156 --- [springboot-jpa-book] [RMI TCP Connection(11)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-06-17T16:28:26.054+08:00  INFO 13156 --- [springboot-jpa-book] [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-06-17T16:28:26.057+08:00  INFO 13156 --- [springboot-jpa-book] [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-17T16:28:27.399+08:00  INFO 8524 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Starting SpringbootNewsApplication using Java 21.0.7 with PID 8524 (C:\Users\NTPU\eclipse-workspace\springboot-news\target\classes started by NTPU in C:\Users\NTPU\eclipse-workspace\springboot-news)
+2025-06-17T16:28:27.400+08:00  INFO 8524 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-06-17T16:28:27.779+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:28:27.780+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-06-17T16:28:27.801+08:00  INFO 8524 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.NewsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:28:27.802+08:00  INFO 8524 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:28:27.803+08:00  INFO 8524 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.RoomRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:28:27.803+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JDBC repository interfaces.
+2025-06-17T16:28:27.813+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:28:27.814+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-17T16:28:27.834+08:00  INFO 8524 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 3 JPA repository interfaces.
+2025-06-17T16:28:28.114+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8000 (http)
+2025-06-17T16:28:28.123+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-17T16:28:28.124+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-17T16:28:28.244+08:00  INFO 8524 --- [springboot-jpa-book] [main] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2025-06-17T16:28:28.248+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-17T16:28:28.249+08:00  INFO 8524 --- [springboot-jpa-book] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 828 ms
+2025-06-17T16:28:28.342+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-17T16:28:28.370+08:00  INFO 8524 --- [springboot-jpa-book] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-17T16:28:28.389+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-17T16:28:28.538+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-17T16:28:28.555+08:00  INFO 8524 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-17T16:28:28.647+08:00  INFO 8524 --- [springboot-jpa-book] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6dd38df2
+2025-06-17T16:28:28.649+08:00  INFO 8524 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-17T16:28:28.692+08:00  INFO 8524 --- [springboot-jpa-book] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.34
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-17T16:28:29.204+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-17T16:28:29.239+08:00  INFO 8524 --- [springboot-jpa-book] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:28:29.423+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-06-17T16:28:29.720+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-06-17T16:28:29.981+08:00  INFO 8524 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8000 (http) with context path '/'
+2025-06-17T16:28:29.987+08:00  INFO 8524 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Started SpringbootNewsApplication in 2.818 seconds (process running for 3.14)
+2025-06-17T16:28:35.645+08:00  INFO 8524 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-17T16:28:35.646+08:00  INFO 8524 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-17T16:28:35.646+08:00  INFO 8524 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-06-17T16:39:47.921+08:00  INFO 8524 --- [springboot-jpa-book] [RMI TCP Connection(19)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-17T16:39:47.923+08:00  INFO 8524 --- [springboot-jpa-book] [RMI TCP Connection(19)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-17T16:39:47.925+08:00  INFO 8524 --- [springboot-jpa-book] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-17T16:39:47.928+08:00  INFO 8524 --- [springboot-jpa-book] [RMI TCP Connection(19)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:39:47.929+08:00  INFO 8524 --- [springboot-jpa-book] [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-17T16:39:47.932+08:00  INFO 8524 --- [springboot-jpa-book] [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-17T16:39:49.281+08:00  INFO 16100 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Starting SpringbootNewsApplication using Java 21.0.7 with PID 16100 (C:\Users\NTPU\eclipse-workspace\springboot-news\target\classes started by NTPU in C:\Users\NTPU\eclipse-workspace\springboot-news)
+2025-06-17T16:39:49.282+08:00  INFO 16100 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-06-17T16:39:49.673+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:39:49.674+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-06-17T16:39:49.699+08:00  INFO 16100 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.NewsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:39:49.700+08:00  INFO 16100 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:39:49.701+08:00  INFO 16100 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.RoomRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:39:49.701+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 0 JDBC repository interfaces.
+2025-06-17T16:39:49.707+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:39:49.708+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-17T16:39:49.727+08:00  INFO 16100 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 3 JPA repository interfaces.
+2025-06-17T16:39:50.011+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8000 (http)
+2025-06-17T16:39:50.021+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-17T16:39:50.021+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-17T16:39:50.139+08:00  INFO 16100 --- [springboot-jpa-book] [main] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2025-06-17T16:39:50.143+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-17T16:39:50.144+08:00  INFO 16100 --- [springboot-jpa-book] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 840 ms
+2025-06-17T16:39:50.243+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-17T16:39:50.273+08:00  INFO 16100 --- [springboot-jpa-book] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-17T16:39:50.293+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-17T16:39:50.445+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-17T16:39:50.463+08:00  INFO 16100 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-17T16:39:50.558+08:00  INFO 16100 --- [springboot-jpa-book] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57b711b6
+2025-06-17T16:39:50.559+08:00  INFO 16100 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-17T16:39:50.605+08:00  INFO 16100 --- [springboot-jpa-book] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.34
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-17T16:39:51.126+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-17T16:39:51.162+08:00  INFO 16100 --- [springboot-jpa-book] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:39:51.348+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-06-17T16:39:51.653+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-06-17T16:39:51.912+08:00  INFO 16100 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8000 (http) with context path '/'
+2025-06-17T16:39:51.919+08:00  INFO 16100 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Started SpringbootNewsApplication in 2.87 seconds (process running for 3.192)
+2025-06-17T16:40:00.223+08:00  INFO 16100 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-17T16:40:00.223+08:00  INFO 16100 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-17T16:40:00.224+08:00  INFO 16100 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-06-17T16:47:38.170+08:00  INFO 16100 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-17T16:47:38.172+08:00  INFO 16100 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-17T16:47:38.174+08:00  INFO 16100 --- [springboot-jpa-book] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-17T16:47:38.176+08:00  INFO 16100 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:47:38.177+08:00  INFO 16100 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-17T16:47:38.180+08:00  INFO 16100 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-17T16:47:39.528+08:00  INFO 8272 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Starting SpringbootNewsApplication using Java 21.0.7 with PID 8272 (C:\Users\NTPU\eclipse-workspace\springboot-news\target\classes started by NTPU in C:\Users\NTPU\eclipse-workspace\springboot-news)
+2025-06-17T16:47:39.529+08:00  INFO 8272 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-06-17T16:47:39.930+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:47:39.931+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-06-17T16:47:39.956+08:00  INFO 8272 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.NewsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:47:39.957+08:00  INFO 8272 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:47:39.958+08:00  INFO 8272 --- [springboot-jpa-book] [main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.demo.repository.RoomRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-06-17T16:47:39.958+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 0 JDBC repository interfaces.
+2025-06-17T16:47:39.964+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-17T16:47:39.965+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-17T16:47:39.985+08:00  INFO 8272 --- [springboot-jpa-book] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 3 JPA repository interfaces.
+2025-06-17T16:47:40.270+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8000 (http)
+2025-06-17T16:47:40.280+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-17T16:47:40.280+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-17T16:47:40.395+08:00  INFO 8272 --- [springboot-jpa-book] [main] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2025-06-17T16:47:40.399+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-17T16:47:40.399+08:00  INFO 8272 --- [springboot-jpa-book] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 849 ms
+2025-06-17T16:47:40.502+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-17T16:47:40.532+08:00  INFO 8272 --- [springboot-jpa-book] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-17T16:47:40.552+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-17T16:47:40.701+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-17T16:47:40.719+08:00  INFO 8272 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-17T16:47:40.816+08:00  INFO 8272 --- [springboot-jpa-book] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57b711b6
+2025-06-17T16:47:40.818+08:00  INFO 8272 --- [springboot-jpa-book] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-17T16:47:40.862+08:00  INFO 8272 --- [springboot-jpa-book] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.34
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-17T16:47:41.379+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-17T16:47:41.415+08:00  INFO 8272 --- [springboot-jpa-book] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:47:41.598+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-06-17T16:47:41.895+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-06-17T16:47:42.152+08:00  INFO 8272 --- [springboot-jpa-book] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8000 (http) with context path '/'
+2025-06-17T16:47:42.159+08:00  INFO 8272 --- [springboot-jpa-book] [main] c.e.demo.SpringbootNewsApplication       : Started SpringbootNewsApplication in 2.864 seconds (process running for 3.184)
+2025-06-17T16:47:43.699+08:00  INFO 8272 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-17T16:47:43.700+08:00  INFO 8272 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-17T16:47:43.700+08:00  INFO 8272 --- [springboot-jpa-book] [http-nio-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-06-17T16:56:52.263+08:00  INFO 8272 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-17T16:56:52.264+08:00  INFO 8272 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-17T16:56:52.267+08:00  INFO 8272 --- [springboot-jpa-book] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-17T16:56:52.268+08:00  INFO 8272 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-17T16:56:52.269+08:00  INFO 8272 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-17T16:56:52.272+08:00  INFO 8272 --- [springboot-jpa-book] [RMI TCP Connection(17)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

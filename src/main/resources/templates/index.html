@@ -325,7 +325,7 @@ body {
 					class="news-card">
 
 					<button class="btn btn-sm btn-outline-primary add-to-cart-btn"
-    th:attr="data-id=${news.id}">🔖加入清單</button>
+    th:attr="data-id=${news.id}">➕</button>
 					<a th:href="${news.url}" target="_blank">
 						<div style="display: flex;">
 							<img th:if="${news.imageUrl != null}" th:src="${news.imageUrl}"
