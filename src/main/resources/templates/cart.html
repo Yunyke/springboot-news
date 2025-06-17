@@ -6,6 +6,158 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+  #ai-assistant-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#ai-assistant-button:hover {
+  background-color: #0056b3;
+}
+
+#ai-chatbox {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  max-height: 440px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 998;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+	
+#ai-chatbox-header {
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+#ai-chatbox-messages {
+  flex: 1;
+  padding: 12px;
+  font-size: 0.9rem;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+#ai-chatbox-messages div {
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+#ai-chatbox-messages div strong {
+  color: #0d6efd;
+}
+
+#ai-chatbox-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+#ai-chatbox-input input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 0.9rem;
+  outline: none;
+  background-color: #f7f7f7;
+}
+
+#ai-chatbox-input button {
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+#ai-chatbox-input button:hover {
+  background-color: #0056b3;
+}
+        /* ✅ 左側目錄區塊 */
+/* ✅ 左側目錄區塊 */
+#sidebar-nav {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+  z-index: 100;
+}
+
+#sidebar-nav h5 {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-item .item-index {
+  flex-shrink: 0;
+  width: 2em;
+  text-align: right;
+  margin-right: 0.5rem;
+  color: #555;
+}
+
+.sidebar-item a {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar-item a:hover {
+  text-decoration: underline;
+}
+
+.sidebar-item a.active {
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+
     body {
       background: #f0f2f5;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -86,11 +238,19 @@
       .news-feed-desc {
         font-size: 0.95rem;
       }
+	
+
+	
     }
   </style>
 </head>
 
 <body onload="loadCart()">
+
+<!-- ✅ 左側固定目錄 -->
+<nav id="sidebar-nav">
+  <!-- JS 動態插入目錄連結 -->
+</nav>
 
 <main class="feed-container">
   <h1 class="text-center mb-4">📰 我的新聞牆</h1>
@@ -119,7 +279,32 @@ function loadCart() {
   .then(res => res.text())
   .then(html => {
     document.getElementById("cart-content").innerHTML = html;
+    
+    const sidebar = document.getElementById("sidebar-nav");
+    sidebar.innerHTML = "<h5>📑 新聞清單</h5><ul class='sidebar-list'></ul>";
+    const list = sidebar.querySelector(".sidebar-list");
 
+    document.querySelectorAll(".news-feed-card").forEach((card, index) => {
+      const title = card.querySelector(".news-feed-title")?.textContent || `新聞 ${index + 1}`;
+      const id = `news-item-${index}`;
+      card.setAttribute("id", id);
+
+      const li = document.createElement("li");
+      li.className = "sidebar-item";
+
+      const number = document.createElement("span");
+      number.className = "item-index";
+      number.textContent = `${index + 1}.`;
+
+      const link = document.createElement("a");
+      link.href = `#${id}`;
+      link.textContent = title;
+      link.title = title;
+
+      li.appendChild(number);
+      li.appendChild(link);
+      list.appendChild(li);
+    });
     // 綁定移除
     document.querySelectorAll(".remove-from-cart-btn").forEach(btn => {
       btn.addEventListener("click", function () {
@@ -141,7 +326,34 @@ function loadCart() {
       });
     });
   });
+  
 }
+function toggleChatbox() {
+	  const chatbox = document.getElementById("ai-chatbox");
+	  chatbox.style.display = (chatbox.style.display === "none" || chatbox.style.display === "") ? "flex" : "none";
+	}
+
+	function sendAiMessage() {
+		document.getElementById("ai-user-input").addEventListener("keydown", function (e) {
+			  if (e.key === "Enter") {
+			    sendAiMessage();
+			  }
+			});
+
+	  const messages = document.getElementById("ai-chatbox-messages");
+
+	  const userMsg = document.createElement("div");
+	  userMsg.innerHTML = `<strong>你:</strong> ${msg}`;
+	  messages.appendChild(userMsg);
+
+	  const aiReply = document.createElement("div");
+	  aiReply.innerHTML = `<strong>AI:</strong> 🤖 我目前是靜態範例，有需要我可以連接 API！`;
+	  messages.appendChild(aiReply);
+
+	  input.value = "";
+	  messages.scrollTop = messages.scrollHeight;
+	}
+
 </script>
 
 <!-- Thymeleaf Fragment for cart -->
@@ -164,6 +376,18 @@ function loadCart() {
     </div>
   </div>
 </div>
+<!-- ✅ AI 助理對話框 -->
+<div id="ai-chatbox">
+  <div id="ai-chatbox-header"> AI 助理</div>
+  <div id="ai-chatbox-messages">
+    <div><strong>AI:</strong> 嗨！需要幫忙嗎？</div>
+  </div>
+  <div id="ai-chatbox-input">
+    <input type="text" id="ai-user-input" placeholder="輸入訊息..." />
+    <button onclick="sendAiMessage()">送出</button>
+  </div>
+</div>
 
+<button id="ai-assistant-button" onclick="toggleChatbox()">💬 有事問 AI</button>
 </body>
 </html>

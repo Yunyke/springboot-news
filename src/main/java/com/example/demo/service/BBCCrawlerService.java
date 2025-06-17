@@ -46,6 +46,6 @@ public class BBCCrawlerService {
             e.printStackTrace();
         }
 
-        System.out.println("✅ 抓到內容長度：" + news.getContent().length());
+        
     }
 }
