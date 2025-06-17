@@ -9,4 +9,5 @@ public class NhkNews {
 	    private String link;      
 	    private String imageUrl;
 	    private String pubDate;
+	    private String content;
 }

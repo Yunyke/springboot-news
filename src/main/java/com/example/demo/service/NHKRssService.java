@@ -10,8 +10,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.service.NHKCrawlerService;
 @Service
 public class NHKRssService {
+	  private final NHKCrawlerService crawler;
+
+	    public NHKRssService(NHKCrawlerService crawler) {
+	        this.crawler = crawler;
+	    }
 
     public List<NhkNews> getNhkNews() {
         List<NhkNews> newsList = new ArrayList<>();
@@ -60,7 +66,7 @@ public class NHKRssService {
                 news.setPubDate(pubDate);
                 news.setImageUrl(imageUrl);
                 news.setLink(link);
-
+                crawler.enrich(news);
                 newsList.add(news);
             }
 

@@ -75,7 +75,8 @@ public class NewsService {
                 news.setUrl(url);
                 news.setImageUrl(item.getImageUrl());
                 news.setSource("NHK");
-                news.setPublishedAt(parseZonedTime(item.getPubDate()));  // 如果格式是 RFC 1123，這行會 work
+                news.setPublishedAt(parseZonedTime(item.getPubDate())); 
+                news.setContent(item.getContent());
                 newsRepository.save(news);
             }
         }
